@@ -1,0 +1,32 @@
+{% extends "base_generic.html" %}
+
+{% load static %}
+<link rel="stylesheet" href="{% static 'css/create.css' %}">
+
+{% block content %}
+
+  {% if form.errors %}
+      {% for field in form %}
+          {% for error in field.errors %}
+              <div class="alert alert-danger">
+                  <strong>{{ error|escape }}</strong>
+              </div>
+          {% endfor %}
+      {% endfor %}
+      {% for error in form.non_field_errors %}
+          <div class="alert alert-danger">
+              <strong>{{ error|escape }}</strong>
+          </div>
+      {% endfor %}
+  {% endif %}
+  
+  <form action="{% url 'create_book' %}" method="post">
+      {% csrf_token %}
+      <!-- ".as_p" est une option de style. Le formulaire va être généré sous forme de bloc -->
+      {{ form.as_p }}
+      <input type="submit" value="Submit">
+      <input type="hidden" name="form" value="book" />
+  </form>
+  
+{% endblock %}
+  

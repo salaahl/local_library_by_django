@@ -1,0 +1,49 @@
+{% extends "base_generic.html" %}
+
+{% block content %}
+  <h1>Title : {{ book.title }}</h1>
+
+  <p><strong>Author :</strong> <a href="">{{ book.author }}</a></p> <!-- author detail link not yet defined -->
+  <p><strong>Summary :</strong> {{ book.summary }}</p>
+  <p><strong>ISBN :</strong> {{ book.isbn }}</p>
+  <p><strong>Language :</strong> {{ book.language }}</p>
+  <p><strong>Genre :</strong> {{ book.genre.all|join:", " }}</p>
+
+  <div style="margin-left:20px;margin-top:20px">
+    <h4>Copies</h4>
+    <!-- "_set"(.all) est une fonction de Django permettant de retrouver la partie "Many" d'une relation (étant donné que la relation OneToMany n'a été déclarée que du côté One donc du côté du model "book"). Ainsi, je vais pouvour retrouver tous les enregistrements "bookinstance" associés à mon objet "book". -->
+    {% for copy in book.bookinstance_set.all %}
+      <hr>
+      <p class="{% if copy.status == 'a' %}text-success{% elif copy.status == 'm' %}text-danger{% else %}text-warning{% endif %}">
+        {{ copy.get_status_display }}
+      </p>
+      {% if copy.status == 'a' %}
+        <p class="text-success">Ce document est disponible pour emprunt !</p>
+        <form action="{{ request.path }}" method="post">
+          {% csrf_token %}
+          <input type="submit" value="Emprunter">
+          <input type="hidden" name="borrow_book" value="/" />
+          <input type="hidden" name="copy_id" value="{{ copy.id }}" />
+          <input type="hidden" name="user_id" value="{{ user.id }}" />
+        </form>
+      {% elif copy.status == 'o' and user == copy.borrower %}
+        <p class="text-danger">Retourner le document :</p>
+        <form action="{{ request.path }}" method="post">
+          {% csrf_token %}
+          <input type="submit" value="Retourner le document">
+          <input type="hidden" name="return_book" value="/" />
+          <input type="hidden" name="copy_id" value="{{ copy.id }}" />
+          <input type="hidden" name="user_id" value="{{ user.id }}" />
+        </form>
+        <p class="text-danger">Renouveler le document :</p>
+        <a href="{% url 'renew-book' pk=copy.id %}">Renouveler</a>
+      {% else %}
+        <p>
+          <strong>Document emprunté par :</strong> {{ copy.borrower }}<br>
+          <strong>Due to be returned :</strong> {{ copy.due_back }}</p>
+      {% endif %}
+      <p><strong>Imprint :</strong> {{ copy.imprint }}</p>
+      <p class="text-muted"><strong>Id :</strong> {{ copy.id }}</p>
+    {% endfor %}
+  </div>
+{% endblock %}
