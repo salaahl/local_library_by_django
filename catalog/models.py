@@ -14,7 +14,7 @@ class Genre(models.Model):
 
     def __str__(self):
         """Cette fonction est obligatoirement requise par Django.
-           Elle retourne une chaîne de caractère pour identifier l'instance de la classe d'objet."""
+           Elle retourne une chaîne de caractère pour identifier l'instance de la classe d'objet. L'appel se fait avec la fonction str(monModel)"""
         return self.name
 
 

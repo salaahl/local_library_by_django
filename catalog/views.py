@@ -123,6 +123,19 @@ def create_genre(request):
 
 # READ
 # Autre façon de retourner des résultats dans un template. Autre façon également de bloquer une page aux utilisateurs-non connectés. Les Mixins sont à utiliser pour les views de type "class".
+class AuthorListView(PermissionRequiredMixin, LoginRequiredMixin,
+                     generic.ListView):
+    login_url = '/login/'
+    permission_required = 'catalog.create_author'
+    model = Author
+    context_object_name = 'authors_list'  # your own name for the list as a template variable
+    # queryset = Book.objects.filter(title__icontains='one')[:5] # Get and return 5 books containing the title one
+    queryset = Author.objects.all()
+    # Gère la logique de la pagination. L'affichage est quant à lui géré par le template associé (en l'occurence, le template "base_generic").
+    paginate_by = 10
+    template_name = 'authors/authors_list.html'  # Specify your own template name/location
+
+
 class BookListView(PermissionRequiredMixin, LoginRequiredMixin,
                    generic.ListView):
     login_url = '/login/'
@@ -132,19 +145,28 @@ class BookListView(PermissionRequiredMixin, LoginRequiredMixin,
     # queryset = Book.objects.filter(title__icontains='one')[:5] # Get and return 5 books containing the title one
     queryset = Book.objects.all()
     # Gère la logique de la pagination. L'affichage est quant à lui géré par le template associé (en l'occurence, le template "base_generic").
-    paginate_by = 3
+    paginate_by = 10
     template_name = 'books/books_list.html'  # Specify your own template name/location
 
 
-# Classe d'un livre.
 class BookDetailView(generic.DetailView):
     model = Book
     template_name = 'books/book_detail.html'
 
     def post(self, request, pk):
-      return_book(self, request, pk)
-      
-      return HttpResponseRedirect(self.request.path_info)
+        return_book(self, request, pk)
+
+        return HttpResponseRedirect(self.request.path_info)
+
+
+class AuthorDetailView(generic.DetailView):
+    model = Author
+    template_name = 'authors/author_detail.html'
+
+    def post(self, request, pk):
+        return_book(self, request, pk)
+
+        return HttpResponseRedirect(self.request.path_info)
 
 
 class LoanedBooksByUserListView(LoginRequiredMixin, generic.ListView):
