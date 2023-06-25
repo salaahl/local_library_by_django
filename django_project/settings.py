@@ -12,6 +12,7 @@ https://docs.djangoproject.com/en/3.2/ref/settings/
 
 from pathlib import Path
 import os
+import dj_database_url
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
@@ -124,6 +125,8 @@ USE_TZ = True
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/3.2/howto/static-files/
 
+STATIC_ROOT = BASE_DIR / 'staticfiles'
+
 STATIC_URL = '/static/'
 
 # Default primary key field type
@@ -134,5 +137,10 @@ DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 # Redirect to home URL after login (Default redirects to /accounts/profile/)
 LOGIN_REDIRECT_URL = '/'
 
+# Permet de tester son système d'envoi de mails en mode developpement
 EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'
+
+# dj-database-url est utilisé pour extraire la configuration de la base de données Django à partir d'une variable d'environnement. Django utilisera désormais la configuration de la base de données dans DATABASE_URLsi la variable d'environnement est définie ; sinon, il utilise la base de données SQLite par défaut. Ajouté à l'aide de la commande "pip3 install dj-database-url"
+db_from_env = dj_database_url.config(conn_max_age=500)
+DATABASES['default'].update(db_from_env)
 
