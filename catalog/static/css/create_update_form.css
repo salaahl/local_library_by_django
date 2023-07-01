@@ -1,0 +1,13 @@
+table {
+  width: 100%;
+}
+
+td {
+  display: flex;
+  align-items: center;
+  margin: 1% 0 1% 0;
+}
+
+td span {
+  margin-left: 2%;
+}

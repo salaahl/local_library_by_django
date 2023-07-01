@@ -2,7 +2,7 @@ from django.urls import path
 from . import views
 
 urlpatterns = [
-    # divers
+    # read
     #1er paramètre : url, 2è : la vue, 3e (optionnel) : le nom de la route (qui pourra ensuite s'utiliser ainsi dans la vue : {% url 'index' %})
     path('', views.index, name='index'),
     path('authors/', views.AuthorListView.as_view(), name='authors'),
@@ -11,13 +11,15 @@ urlpatterns = [
          name='author-detail'),
     path('books/', views.BookListView.as_view(), name='books'),
     path('book/<int:pk>', views.BookDetailView.as_view(), name='book-detail'),
-    path('mybooks/',
+    path('my-books/',
          views.LoanedBooksByUserListView.as_view(),
          name='my-borrowed'),
-    path('book/<uuid:pk>/renew/', views.renew_book, name='renew-book'),
     # create
+    path('user/create/', views.create_user, name='user-create'),
     path('author/create/', views.create_author, name='author-create'),
     path('book/create/', views.create_book, name='book-create'),
+    path('book/<uuid:pk>/renew/', views.renew_book, name='book-renew'),
+    path('book/<uuid:pk>/return/', views.return_book, name='book-return'),
     path('book_instance/create/',
          views.create_book_instance,
          name='book_instance-create'),

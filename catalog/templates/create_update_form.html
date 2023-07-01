@@ -1,0 +1,16 @@
+{% extends "base_generic.html" %}
+
+{% block css %}
+  {% load static %}
+  <link rel="stylesheet" href="{% static 'css/create_update_form.css' %}">
+{% endblock %}
+
+{% block content %}
+  <form action="" method="post">
+    {% csrf_token %}
+    <table>
+    {{ form.as_table }}
+    </table>
+    <input type="submit" class="button" value="Soumettre">
+  </form>
+{% endblock %}

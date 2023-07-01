@@ -1,16 +1,37 @@
-{% extends "base_generic.html" %}
+{% extends "base_generic.html" %} 
+
+{% block title %}Livres{% endblock %}
 
 {% block content %}
-  <h1>Book List</h1>
-  {% if book_list %}
-  <ul>
-    {% for book in book_list %}
-      <li>
-        <a href="{{ book.get_absolute_url }}">{{ book.title }}</a> ({{book.author}})
-      </li>
+<h1>Livres :</h1>
+{% if books_list %}
+<table class="table table-striped">
+  <thead>
+    <tr>
+      <th scope="col">N°</th>
+      <th scope="col">Titre</th>
+      <th scope="col">Auteur</th>
+      {% if perms.can_change_book and perms.can_delete_book %}
+      <th scope="col">Mettre à jour</th>
+      <th scope="col">Supprimer</th>
+      {% endif %}
+    </tr>
+  </thead>
+  <tbody>
+    {% for book in books_list %}
+    <tr>
+      <th scope="row">{{ book.id }}</th>
+      <td><a href="{{ book.get_absolute_url }}">{{ book.title }}</a></td>
+      <td><a href="{% url 'author-detail' book.author.id %}">{{ book.author }}</a></td>
+      {% if perms.can_change_book and perms.can_delete_book %}
+      <td><a href="{% url 'book-update' book.pk %}">Mettre à jour</a></td>
+      <td><a href="{% url 'book-delete' book.pk %}">Supprimer</a></td>
+      {% endif %}
+    </tr>
     {% endfor %}
-  </ul>
-  {% else %}
-    <p>There are no books in the library.</p>
-  {% endif %}
+  </tbody>
+</table>
+{% else %}
+<p>There are no books in the library.</p>
+{% endif %}
 {% endblock %}

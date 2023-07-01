@@ -1,10 +1,50 @@
 {% extends "base_generic.html" %}
 
+{% block css %}
+{% load static %}
+<link rel="stylesheet" href="{% static 'css/author_detail.css' %}">
+{% endblock %}
+
 {% block content %}
+<div class="row">
+  <div class="col">
   <h1>Auteur :</h1>
 
-  <p><strong>Nom :</strong> {{ author.last_name }}</p> <!-- author detail link not yet defined -->
+  <p><strong>Nom :</strong> {{ author.last_name }}</p>
   <p><strong>Prénom :</strong> {{ author.first_name }}</p>
   <p><strong>Date de naissance :</strong> {{ author.date_of_birth }}</p>
   <p><strong>Mort :</strong> {{ author.date_of_death }}</p>
+</div>
+</div>
+<div class="row">
+  <div class="col">
+  <h3>Ses derniers livres :</h3>
+  <hr>
+  <table class="table table-striped">
+    <thead>
+      <tr>
+        <th scope="col">N°</th>
+        <th scope="col">Titre</th>
+        {% if perms.can_change_book and perms.can_delete_book %}
+        <th scope="col">Mettre à jour</th>
+        <th scope="col">Supprimer</th>
+        {% endif %}
+      </tr>
+    </thead>
+    <tbody>
+      <!-- Le slice permet de limiter les résultats -->
+      {% for book in author.book_set.all|slice:":5" %}
+      <tr>
+        <th scope="row">{{ book.id }}</th>
+        <td><a href="{{ book.get_absolute_url }}">{{ book.title }}</a></td>
+        {% if perms.can_change_book and perms.can_delete_book %}
+        <td><a href="{% url 'book-update' book.pk %}">Mettre à jour</a></td>
+        <td><a href="{% url 'book-delete' book.pk %}">Supprimer</a></td>
+        {% endif %}
+      </tr>
+      {% endfor %}
+    </tbody>
+  </table>
+</div>
+</div>
 {% endblock %}

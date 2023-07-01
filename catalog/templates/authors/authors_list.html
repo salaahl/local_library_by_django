@@ -1,16 +1,41 @@
 {% extends "base_generic.html" %}
 
+{% block title %}Auteurs{% endblock %}
+
+{% block css %}
+{% load static %}
+{% endblock %}
+
 {% block content %}
-  <h1>Author List</h1>
-  {% if authors_list %}
-  <ul>
+<h1>Auteurs :</h1>
+{% if authors_list %}
+<table class="table table-striped">
+  <thead>
+    <tr>
+      <th scope="col">N°</th>
+      <th scope="col">Nom & Prénom</th>
+      <th scope="col">Date de naissance & mort</th>
+      {% if perms.can_change_author and perms.can_delete_author %}
+      <th scope="col">Mettre à jour</th>
+      <th scope="col">Supprimer</th>
+      {% endif %}
+    </tr>
+  </thead>
+  <tbody>
     {% for author in authors_list %}
-      <li>
-        <a href="{{ author.get_absolute_url }}">{{ author.first_name }}, {{author.last_name}}</a>
-      </li>
+    <tr>
+      <th scope="row">{{ author.id }}</th>
+      <td><a href="{{ author.get_absolute_url }}">{{ author.last_name }}, {{ author.first_name }}</a></td>
+      <td>{{ author.date_of_birth }} - {{ author.date_of_death|default:'' }}</td>
+      {% if perms.can_change_author and perms.can_delete_author %}
+      <td><a href="{% url 'author-update' author.pk %}">Mettre à jour</a></td>
+      <td><a href="{% url 'author-delete' author.pk %}">Supprimer</a></td>
+      {% endif %}
+    </tr>
     {% endfor %}
-  </ul>
-  {% else %}
-    <p>There are no authors in the library.</p>
-  {% endif %}
+  </tbody>
+</table>
+{% else %}
+<p>There are no authors in the library.</p>
+{% endif %}
 {% endblock %}

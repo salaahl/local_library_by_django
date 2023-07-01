@@ -26,7 +26,7 @@ class BooksInstanceInline(admin.TabularInline):
 @admin.register(Book)
 class BookAdmin(admin.ModelAdmin):
   # display_genre est une fonction définie dans le fichier models.py. Django ne peut pas directement afficher une relation many à many (et le champ "Genre" est une relation many à many)
-    list_display = ('title', 'author', 'display_genre')
+    list_display = ('author', 'display_genre')
   # C'est le bloc qui s'affiche en bas lors de la création d'un livre. Il va me permettre d'afficher les enregistrements de la classe "BookInstance"
     inlines = [BooksInstanceInline]
 

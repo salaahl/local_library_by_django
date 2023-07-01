@@ -1,11 +1,13 @@
 {% extends "base_generic.html" %}
 
-{% load static %}
-<link rel="stylesheet" href="{% static 'css/index.css' %}">
+{% block css %}
+  {% load static %}
+  <link rel="stylesheet" href="{% static 'css/index.css' %}">
+{% endblock %}
 
 {% block content %}
   <h1>Accueil de la bibliothèque locale</h1>
-  <p>Bienvenue à la bibliothèque locale, un site web développé par <em>Mozilla Developer Network</em>!</p>
+  <p>Bienvenue à la bibliothèque locale, un site web basé sur le travail de <em>Mozilla Developer Network</em>!</p>
   <h2>Contenu dynamique</h2>
   <p>La bibliothèque dispose des enregistrements suivants:</p>
   <ul>
@@ -16,7 +18,7 @@
   </ul>
 
   <!-- pluralize rajoute un s à la fin si la valeur est différente de 1. -->
-  <p>
+  <p class="counter">
     You have visited this page {{ num_visits }} time{{ num_visits|pluralize }} {{ user }}.
   </p>
 {% endblock %}

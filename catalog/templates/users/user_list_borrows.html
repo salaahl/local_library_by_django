@@ -1,0 +1,36 @@
+{% extends "base_generic.html" %}
+
+{% block title %}Mes emprunts{% endblock %}
+
+{% block content %}
+<h1>Documents empruntés :</h1>
+
+{% if borrows_list %}
+<table class="table table-striped">
+  <thead>
+    <tr>
+      <th scope="col">N°</th>
+      <th scope="col">Titre</th>
+      <th scope="col">Auteur</th>
+      <th scope="col">Date de retour</th>
+      <th scope="col">Prolonger</th>
+      <th scope="col">Retourner</th>
+    </tr>
+  </thead>
+  <tbody>
+    {% for borrow in borrows_list %}
+    <tr>
+      <th scope="row">{{ borrow.book.id }}</th>
+      <td><a href="{{ borrow.book.get_absolute_url }}">{{ borrow.book.title }}</a></td>
+      <td><a href="{% url 'author-detail' borrow.book.author.id %}">{{ borrow.book.author }}</a></td>
+      <td>{{ borrow.due_back }}</td>
+      <td><a href="{% url 'book-renew' borrow.pk %}?next={% url 'book-detail' borrow.book.id %}">Prolonger</a></td>
+      <td><a href="{% url 'book-return' borrow.pk %}?next={% url 'book-detail' borrow.book.id %}">Retourner</a></td>
+    </tr>
+    {% endfor %}
+  </tbody>
+</table>
+{% else %}
+  <p>There are no books borrowed.</p>
+{% endif %}
+{% endblock %}

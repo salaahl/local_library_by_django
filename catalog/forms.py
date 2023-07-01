@@ -1,10 +1,17 @@
 from django.forms import ModelForm
-from catalog.models import Book, Author, BookInstance, Genre
+from catalog.models import User, Book, Author, BookInstance, Genre
 from django.core.exceptions import ValidationError
 from django import forms
 from django.utils.translation import gettext as _
 import re
 import datetime
+
+
+class UserModelForm(ModelForm):
+  
+    class Meta:
+        model = User
+        fields = ['username', 'email', 'password', 'first_name', 'last_name', 'groups']
 
 
 class BookModelForm(ModelForm):
@@ -64,6 +71,7 @@ class AuthorModelForm(ModelForm):
         help_texts = {'date_of_death': ('Si date de décès.')}
 
 
+# Facon alternative (et plus modulaire) de déclarer un formulaire
 class GenreModelForm(forms.Form):
     name = forms.CharField(label="Nom", help_text="Entrez un nom de genre.")
 
@@ -82,7 +90,7 @@ class BookInstanceModelForm(ModelForm):
         model = BookInstance
         fields = ['imprint', 'due_back', 'status', 'book']
         labels = {
-            'imprint': ('Date d\'emprunt'),
+            'imprint': ('Date d\'impression'),
             'due_back': ('Date de retour'),
             'status': ('Statut'),
             'book': ('Livre')

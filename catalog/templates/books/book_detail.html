@@ -1,16 +1,17 @@
 {% extends "base_generic.html" %}
 
 {% block content %}
-  <h1>Title : {{ book.title }}</h1>
+  <h1>Titre : {{ book.title }}</h1>
 
-  <p><strong>Author :</strong> <a href="">{{ book.author }}</a></p> <!-- author detail link not yet defined -->
-  <p><strong>Summary :</strong> {{ book.summary }}</p>
+  <p><strong>Auteur :</strong> <a href="">{{ book.author }}</a></p> <!-- author detail link not yet defined -->
+  <p><strong>Description :</strong> {{ book.summary }}</p>
   <p><strong>ISBN :</strong> {{ book.isbn }}</p>
-  <p><strong>Language :</strong> {{ book.language }}</p>
+  <p><strong>Langage :</strong> {{ book.language }}</p>
   <p><strong>Genre :</strong> {{ book.genre.all|join:", " }}</p>
 
   <div style="margin-left:20px;margin-top:20px">
-    <h4>Copies</h4>
+    <h4>Exemplaires</h4>
+    {% if user.is_authenticated %}
     <!-- "_set"(.all) est une fonction de Django permettant de retrouver la partie "Many" d'une relation (étant donné que la relation OneToMany n'a été déclarée que du côté One donc du côté du model "book"). Ainsi, je vais pouvour retrouver tous les enregistrements "bookinstance" associés à mon objet "book". -->
     {% for copy in book.bookinstance_set.all %}
       <hr>
@@ -18,32 +19,31 @@
         {{ copy.get_status_display }}
       </p>
       {% if copy.status == 'a' %}
-        <p class="text-success">Ce document est disponible pour emprunt !</p>
+      <p>
         <form action="{{ request.path }}" method="post">
           {% csrf_token %}
-          <input type="submit" value="Emprunter">
+          <input class="button" type="submit" value="Emprunter">
           <input type="hidden" name="borrow_book" value="/" />
           <input type="hidden" name="copy_id" value="{{ copy.id }}" />
           <input type="hidden" name="user_id" value="{{ user.id }}" />
         </form>
+      </p>
       {% elif copy.status == 'o' and user == copy.borrower %}
-        <p class="text-danger">Retourner le document :</p>
-        <form action="{{ request.path }}" method="post">
-          {% csrf_token %}
-          <input type="submit" value="Retourner le document">
-          <input type="hidden" name="return_book" value="/" />
-          <input type="hidden" name="copy_id" value="{{ copy.id }}" />
-          <input type="hidden" name="user_id" value="{{ user.id }}" />
-        </form>
-        <p class="text-danger">Renouveler le document :</p>
-        <a href="{% url 'renew-book' pk=copy.id %}">Renouveler</a>
+      <a class="button" href="{% url 'book-renew' copy.pk %}?next={% url 'book-detail' book.id %}">Prolonger</a>
+      <a class="button" href="{% url 'book-return' copy.pk %}?next={% url 'book-detail' book.id %}">Retourner</a>
       {% else %}
-        <p>
-          <strong>Document emprunté par :</strong> {{ copy.borrower }}<br>
-          <strong>Due to be returned :</strong> {{ copy.due_back }}</p>
+      <p>
+        <strong>Document emprunté par :</strong> {{ copy.borrower }}<br>
+        <strong>Date de retour :</strong> {{ copy.due_back }}</p>
       {% endif %}
-      <p><strong>Imprint :</strong> {{ copy.imprint }}</p>
-      <p class="text-muted"><strong>Id :</strong> {{ copy.id }}</p>
+      <p><strong>Date d'impression :</strong> {{ copy.imprint }}</p>
+      <p class="text-muted"><strong>Identifiant :</strong> {{ copy.id }}</p>
     {% endfor %}
   </div>
+  {% else %}
+    <p>
+      Veuillez vous connecter pour accéder au statut du document.<br>
+      <a class="button" href="{% url 'login' %}?next={% url 'book-detail' book.id %}">Se connecter</a>
+    </p>
+  {% endif %}
 {% endblock %}

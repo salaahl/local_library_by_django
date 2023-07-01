@@ -1,20 +1,47 @@
+import os
 from django.shortcuts import render, get_object_or_404
 from catalog.models import Book, Author, BookInstance, Genre, User
 from django.views import generic
 from django.http import HttpResponseRedirect
 from django.urls import reverse, reverse_lazy
-from .forms import AuthorModelForm, BookModelForm, GenreModelForm, BookInstanceModelForm, RenewBookForm
+from .forms import UserModelForm, AuthorModelForm, BookModelForm, GenreModelForm, BookInstanceModelForm, RenewBookForm
 from django.contrib.auth.decorators import login_required, permission_required
 from django.contrib.auth.mixins import LoginRequiredMixin, PermissionRequiredMixin
 import datetime
 from django.views.generic.edit import UpdateView, DeleteView
+from sendgrid import SendGridAPIClient
+from sendgrid.helpers.mail import Mail
 
 
-# Code qui va être utilisé pour l'affichage de la page. L'équivalent du controlleur dans Laravel/Symfony
+def send_mail(from_email, to_emails, subject, html_content):
+    """
+    Easy wrapper for sending a single message to a recipient list. All members
+    of the recipient list will see the other recipients in the 'To' field.
+
+    If auth_user is None, use the EMAIL_HOST_USER setting.
+    If auth_password is None, use the EMAIL_HOST_PASSWORD setting.
+
+    Note: The API for this method is frozen. New code wanting to extend the
+    functionality should use the EmailMessage class directly.
+    """
+    message = Mail(
+    from_email=from_email,
+    to_emails=to_emails,
+    subject=subject,
+    html_content=html_content)
+    try:
+        sg = SendGridAPIClient(os.environ.get('SENDGRID_API_KEY'))
+        response = sg.send(message)
+        print(response.status_code)
+        print(response.body)
+        print(response.headers)
+    except Exception as e:
+        print(e.message)
+
+
 def index(request):
     """View function for home page of site."""
 
-    # Generate counts of some of the main objects
     num_books = Book.objects.all().count()
     num_instances = BookInstance.objects.all().count()
 
@@ -37,29 +64,38 @@ def index(request):
         'num_visits': num_visits,
     }
 
+    # send_mail('sokhona.salaha@gmail.com', 'salsdu19@gmail.com', 'Sujet : Votre compte.', '<strong>Message : Compte créé</strong>')
+
     return render(request, 'index.html', context=context)
 
 
 # CREATE
+# Le paramètre indique le chemin sur lequel rediriger l'utilisateur s'il n'est pas connecté
 @login_required(login_url='/accounts/login/')
+@permission_required('catalog.can_add_user', raise_exception=True)
 def create_user(request):
-    """
-    # Créer un utilisateur
-    user = User.objects.create_user('myusername', 'myemail@crazymail.com', 'mypassword')
 
-    # Modifier certains champs
-    user.first_name = 'Tyrone'
-    user.last_name = 'Citizen'
+    form = UserModelForm()
 
-    # Sauvegarder l'utilisateur/les modifications
-    user.save()
-    """
+    if request.method == 'POST':
+        form = UserModelForm(request.POST)
+
+        if form.is_valid():
+            form.save()
+            send_mail(
+              'salsdu19@gmail.com', 
+              'Sujet : Votre compte.', 
+              '<strong>Message : Compte créé</strong>'
+            )
+
+            return HttpResponseRedirect(reverse('index'))
 
     # A créer plus tard
-    return render(request, 'users/user_create_update.html')
+    return render(request, 'create_update_form.html', {'form': form})
 
 
-@permission_required('catalog.create_author', raise_exception=True)
+@login_required(login_url='/accounts/login/')
+@permission_required('catalog.can_add_author', raise_exception=True)
 def create_author(request):
 
     form = AuthorModelForm()
@@ -72,9 +108,11 @@ def create_author(request):
 
             return HttpResponseRedirect(reverse('index'))
 
-    return render(request, 'authors/author_create_update.html', {'form': form})
+    return render(request, 'create_update_form.html', {'form': form})
 
 
+@login_required(login_url='/accounts/login/')
+@permission_required('catalog.can_add_book', raise_exception=True)
 def create_book(request):
 
     form = BookModelForm()
@@ -83,13 +121,15 @@ def create_book(request):
         form = BookModelForm(request.POST)
 
         if form.is_valid():
-            #form.save()
+            form.save()
 
             return HttpResponseRedirect(reverse('index'))
 
-    return render(request, 'books/book_create_update.html', {'form': form})
+    return render(request, 'create_update_form.html', {'form': form})
 
 
+@login_required(login_url='/accounts/login/')
+@permission_required('catalog.can_add_book_instance', raise_exception=True)
 def create_book_instance(request):
 
     form = BookInstanceModelForm()
@@ -102,10 +142,12 @@ def create_book_instance(request):
 
             return HttpResponseRedirect(reverse('index'))
 
-    return render(request, 'books_instances/book_instance_create_update.html',
+    return render(request, 'create_update_form.html',
                   {'form': form})
 
 
+@login_required(login_url='/accounts/login/')
+@permission_required('catalog.can_add_genre', raise_exception=True)
 def create_genre(request):
 
     form = GenreModelForm()
@@ -118,35 +160,28 @@ def create_genre(request):
 
             return HttpResponseRedirect(reverse('index'))
 
-    return render(request, 'genres/genre_create_update.html', {'form': form})
+    return render(request, 'create_update_form.html', {'form': form})
 
 
 # READ
-# Autre façon de retourner des résultats dans un template. Autre façon également de bloquer une page aux utilisateurs-non connectés. Les Mixins sont à utiliser pour les views de type "class".
-class AuthorListView(PermissionRequiredMixin, LoginRequiredMixin,
-                     generic.ListView):
-    login_url = '/login/'
-    permission_required = 'catalog.create_author'
+# Les class sont également une façon de retourner des résultats dans un template.
+class AuthorListView(generic.ListView):
     model = Author
     context_object_name = 'authors_list'  # your own name for the list as a template variable
     # queryset = Book.objects.filter(title__icontains='one')[:5] # Get and return 5 books containing the title one
-    queryset = Author.objects.all()
+    # Le signe "-" indique à Django de sortir les résultats par ordre descendant
+    queryset = Author.objects.all().order_by('-id')
     # Gère la logique de la pagination. L'affichage est quant à lui géré par le template associé (en l'occurence, le template "base_generic").
     paginate_by = 10
-    template_name = 'authors/authors_list.html'  # Specify your own template name/location
+    template_name = 'authors/authors_list.html'
 
 
-class BookListView(PermissionRequiredMixin, LoginRequiredMixin,
-                   generic.ListView):
-    login_url = '/login/'
-    permission_required = 'catalog.create_author'
+class BookListView(generic.ListView):
     model = Book
-    context_object_name = 'book_list'  # your own name for the list as a template variable
-    # queryset = Book.objects.filter(title__icontains='one')[:5] # Get and return 5 books containing the title one
+    context_object_name = 'books_list'
     queryset = Book.objects.all()
-    # Gère la logique de la pagination. L'affichage est quant à lui géré par le template associé (en l'occurence, le template "base_generic").
-    paginate_by = 10
-    template_name = 'books/books_list.html'  # Specify your own template name/location
+    paginate_by = 1
+    template_name = 'books/books_list.html'
 
 
 class BookDetailView(generic.DetailView):
@@ -154,8 +189,12 @@ class BookDetailView(generic.DetailView):
     template_name = 'books/book_detail.html'
 
     def post(self, request, pk):
-        return_book(self, request, pk)
+        if request.POST.get('borrow_book'):
+            borrow_book(self, request)
+        elif request.POST.get('return_book'):
+            return_book(self, request)
 
+        # Redirige vers l'URL d'origine
         return HttpResponseRedirect(self.request.path_info)
 
 
@@ -163,16 +202,13 @@ class AuthorDetailView(generic.DetailView):
     model = Author
     template_name = 'authors/author_detail.html'
 
-    def post(self, request, pk):
-        return_book(self, request, pk)
 
-        return HttpResponseRedirect(self.request.path_info)
-
-
+# Les Mixins sont une autre façon de bloquer une page aux utilisateurs selon conditions (ici, que l'utilisateur soit connecté). Ils sont à utiliser pour les views de type "class".
 class LoanedBooksByUserListView(LoginRequiredMixin, generic.ListView):
-    """Generic class-based view listing books on loan to current user."""
+    login_url = '/accounts/login/'
     model = BookInstance
-    template_name = 'books/book_instance_list_borrowed_user.html'
+    context_object_name = 'borrows_list'
+    template_name = 'users/user_list_borrows.html'
     paginate_by = 10
 
     def get_queryset(self):
@@ -181,57 +217,64 @@ class LoanedBooksByUserListView(LoginRequiredMixin, generic.ListView):
 
 
 # UPDATE
-class AuthorUpdate(UpdateView):
+class AuthorUpdate(PermissionRequiredMixin, UpdateView):
+    permission_required = 'catalog.can_change_author'
     model = Author
     fields = ['first_name', 'last_name', 'date_of_birth', 'date_of_death']
-    template_name = 'authors/author_create_update.html'
+    template_name = '_create_update_form.html'
 
 
-class BookUpdate(UpdateView):
+class BookUpdate(PermissionRequiredMixin, UpdateView):
+    permission_required = 'catalog.can_change_book'
     model = Book
     fields = ['title', 'summary']
-    template_name = 'books/book_create_update.html'
+    template_name = '_create_update_form.html'
 
 
-class BookInstanceUpdate(UpdateView):
+class BookInstanceUpdate(PermissionRequiredMixin, UpdateView):
+    permission_required = 'catalog.can_change_book_instance'
     model = BookInstance
     fields = ['first_name', 'last_name', 'date_of_birth', 'date_of_death']
-    template_name = 'books_instances/book_instance_create_update.html'
+    template_name = '_create_update_form.html'
 
 
-class GenreUpdate(UpdateView):
+class GenreUpdate(PermissionRequiredMixin, UpdateView):
+    permission_required = 'catalog.can_change_genre'
     model = Genre
     fields = ['name']
-    template_name = 'genres/genre_create_update.html'
+    template_name = '_create_update_form.html'
 
 
-def return_book(self, request, pk):
-    if request.POST.get('borrow_book'):
-        user_id = request.POST.get('user_id')
-        book_instance_id = request.POST.get('copy_id')
+def borrow_book(self, request):
+    user_id = request.POST.get('user_id')
+    book_instance_id = request.POST.get('copy_id')
 
-        book_instance = get_object_or_404(BookInstance, pk=book_instance_id)
-        user = get_object_or_404(User, pk=user_id)
+    book_instance = get_object_or_404(BookInstance, pk=book_instance_id)
+    user = get_object_or_404(User, pk=user_id)
 
-        book_instance.borrower = user
-        book_instance.status = 'o'
-        book_instance.due_back = datetime.date.today() + datetime.timedelta(
-            weeks=3)
-        book_instance.save()
+    book_instance.borrower = user
+    book_instance.status = 'o'
+    book_instance.due_back = datetime.date.today() + datetime.timedelta(
+        weeks=3)
+    book_instance.save()
 
-    if request.POST.get('return_book'):
-        book_instance_id = request.POST.get('copy_id')
 
-        book_instance = get_object_or_404(BookInstance, pk=book_instance_id)
+def return_book(request, pk):
+    book_instance = get_object_or_404(BookInstance, pk=pk)
 
+    if request.method == 'POST':
         book_instance.borrower = None
         book_instance.status = 'a'
         book_instance.due_back = None
         book_instance.save()
 
+        return HttpResponseRedirect(request.GET.get('next'))
+
+    return render(request, 'books_instances/book_instance_confirm_return.html',
+                  {'book_instance': book_instance})
+
 
 @login_required
-@permission_required('catalog.can_mark_returned', raise_exception=True)
 def renew_book(request, pk):
     """View function for renewing a specific BookInstance."""
     book_instance = get_object_or_404(BookInstance, pk=pk)
@@ -264,25 +307,29 @@ def renew_book(request, pk):
 
 # DELETE
 # Cette nature de classe (DeleteView) reprend ce qui se fait dans le site d'administration. Existe en version CreateView et UpdateView
-class AuthorDelete(DeleteView):
+class AuthorDelete(PermissionRequiredMixin, DeleteView):
+    permission_required = 'catalog.can_delete_author'
     model = Author
     success_url = reverse_lazy('authors')
-    template_name = 'authors/author_confirm_delete.html'
+    template_name = 'authors/delete_form.html'
 
 
-class BookDelete(DeleteView):
+class BookDelete(PermissionRequiredMixin, DeleteView):
+    permission_required = 'catalog.can_delete_book'
     model = Book
     success_url = reverse_lazy('books')
-    template_name = 'authors/book_confirm_delete.html'
+    template_name = 'authors/delete_form.html'
 
 
-class BookInstanceDelete(DeleteView):
+class BookInstanceDelete(PermissionRequiredMixin, DeleteView):
+    permission_required = 'catalog.can_delete_book_instance'
     model = BookInstance
     success_url = reverse_lazy('books_instances')
-    template_name = 'books_instances/book_instance_confirm_delete.html'
+    template_name = 'authors/delete_form.html'
 
 
-class GenreDelete(DeleteView):
+class GenreDelete(PermissionRequiredMixin, DeleteView):
+    permission_required = 'catalog.can_delete_genre'
     model = Genre
     success_url = reverse_lazy('genres')
-    template_name = 'genres/genre_confirm_delete.html'
+    template_name = 'authors/delete_form.html'

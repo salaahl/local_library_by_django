@@ -1,5 +1,13 @@
+html, body, .container-fluid {
+  height: 100%
+}
+
+a {
+  color: inherit
+}
+
 .sidebar-nav {
-    margin-top: 20px;
-    padding: 0;
-    list-style: none;
+  padding: 5%;
+  list-style: none;
+  background-color: whitesmoke;
 }

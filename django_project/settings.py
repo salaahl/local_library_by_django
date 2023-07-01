@@ -140,6 +140,14 @@ LOGIN_REDIRECT_URL = '/'
 # Permet de tester son système d'envoi de mails en mode developpement
 EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'
 
+SENDGRID_API_KEY = os.getenv('SENDGRID_API_KEY')
+
+EMAIL_HOST = 'smtp.sendgrid.net'
+EMAIL_HOST_USER = 'Local Library KEY'
+EMAIL_HOST_PASSWORD = SENDGRID_API_KEY
+EMAIL_PORT = 587
+EMAIL_USE_TLS = True
+
 # dj-database-url est utilisé pour extraire la configuration de la base de données Django à partir d'une variable d'environnement. Django utilisera désormais la configuration de la base de données dans DATABASE_URLsi la variable d'environnement est définie ; sinon, il utilise la base de données SQLite par défaut. Ajouté à l'aide de la commande "pip3 install dj-database-url"
 db_from_env = dj_database_url.config(conn_max_age=500)
 DATABASES['default'].update(db_from_env)
