@@ -4,5 +4,3 @@ document.querySelectorAll(".nav-link").forEach((link) => {
         link.setAttribute("aria-current", "page");
     }
 });
-
-console.log('ok')

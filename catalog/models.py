@@ -78,10 +78,10 @@ class BookInstance(models.Model):
                                  blank=True)
 
     LOAN_STATUS = (
-        ('m', 'Maintenance'),
-        ('o', 'On loan'),
-        ('a', 'Available'),
-        ('r', 'Reserved'),
+        ('m', 'Problème sur document'),
+        ('o', 'Emprunté'),
+        ('a', 'Disponible'),
+        ('r', 'Réservé'),
     )
 
     status = models.CharField(

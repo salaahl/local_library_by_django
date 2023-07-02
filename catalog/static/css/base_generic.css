@@ -4,7 +4,7 @@
   }
 }
 
-html, body, .container-fluid {
+html, body, body > .container-fluid {
   height: 100%;
 }
 
@@ -17,6 +17,15 @@ a.active::after {
   content: "•";
   margin-left: 5%;
   color: green;
+}
+
+.page-link {
+  color: black;
+}
+
+.active>.page-link, .page-link.active {
+  background-color: black;
+  color: white;
 }
 
 .button {
@@ -87,5 +96,5 @@ div:has(> nav) {
 
 .user-div {
   position: absolute;
-  bottom: 0;
+  bottom: 5%;
 }

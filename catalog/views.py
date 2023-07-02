@@ -11,6 +11,7 @@ import datetime
 from django.views.generic.edit import UpdateView, DeleteView
 from sendgrid import SendGridAPIClient
 from sendgrid.helpers.mail import Mail
+from django.http import JsonResponse
 
 
 def send_mail(from_email, to_emails, subject, html_content):
@@ -24,11 +25,10 @@ def send_mail(from_email, to_emails, subject, html_content):
     Note: The API for this method is frozen. New code wanting to extend the
     functionality should use the EmailMessage class directly.
     """
-    message = Mail(
-    from_email=from_email,
-    to_emails=to_emails,
-    subject=subject,
-    html_content=html_content)
+    message = Mail(from_email=from_email,
+                   to_emails=to_emails,
+                   subject=subject,
+                   html_content=html_content)
     try:
         sg = SendGridAPIClient(os.environ.get('SENDGRID_API_KEY'))
         response = sg.send(message)
@@ -41,6 +41,17 @@ def send_mail(from_email, to_emails, subject, html_content):
 
 def index(request):
     """View function for home page of site."""
+
+    if request.method == 'POST':
+        books = []
+        query = Book.objects.filter(title__istartswith=request.POST.get('book')).values()[0:10]
+        
+        for book in query:
+            author = Author.objects.filter(pk=book['author_id'])[0]
+            book['author'] = str(author)
+            books.append(book)
+
+        return JsonResponse({'books': books})
 
     num_books = Book.objects.all().count()
     num_instances = BookInstance.objects.all().count()
@@ -82,11 +93,8 @@ def create_user(request):
 
         if form.is_valid():
             form.save()
-            send_mail(
-              'salsdu19@gmail.com', 
-              'Sujet : Votre compte.', 
-              '<strong>Message : Compte créé</strong>'
-            )
+            send_mail('salsdu19@gmail.com', 'Sujet : Votre compte.',
+                      '<strong>Message : Compte créé</strong>')
 
             return HttpResponseRedirect(reverse('index'))
 
@@ -142,8 +150,7 @@ def create_book_instance(request):
 
             return HttpResponseRedirect(reverse('index'))
 
-    return render(request, 'create_update_form.html',
-                  {'form': form})
+    return render(request, 'create_update_form.html', {'form': form})
 
 
 @login_required(login_url='/accounts/login/')

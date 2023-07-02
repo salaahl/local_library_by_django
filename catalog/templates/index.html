@@ -8,6 +8,13 @@
 {% block content %}
   <h1>Accueil de la bibliothèque locale</h1>
   <p>Bienvenue à la bibliothèque locale, un site web basé sur le travail de <em>Mozilla Developer Network</em>!</p>
+  <div class="search-container">
+    <form class="search-bar form-inline d-flex">
+      {% csrf_token %}
+      <input class="form-control mr-sm-2" name="search" type="search" placeholder="Search" aria-label="Search">
+    </form>
+    <div class="search-results"></div>
+  </div>
   <h2>Contenu dynamique</h2>
   <p>La bibliothèque dispose des enregistrements suivants:</p>
   <ul>
@@ -21,4 +28,9 @@
   <p class="counter">
     You have visited this page {{ num_visits }} time{{ num_visits|pluralize }} {{ user }}.
   </p>
+{% endblock %}
+
+{% block js %}
+  {% load static %}
+  <script src="{% static 'js/search_book.js' %}"></script>
 {% endblock %}
