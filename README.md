@@ -1,1 +1,0 @@
-- changer les "__all__" dans le fichier forms et détailler les champs à la place car ce n'est pas recommandé de procéder ainsi.
