@@ -8,6 +8,7 @@ document
 		};
 
     $('.search-results').innerHTML = '';
+    $('.search-results').style.opacity = '0';
 
 		let formData = new FormData();
 		formData.append('book', $("[name=search]").value);
@@ -24,12 +25,12 @@ document
 		fetch(request)
 			.then(response => response.json())
 			.then(result => {
-        if(result != '') {
+        if(result.books != '') {
+          $('.search-results').style.opacity = '1';
           $('.search-results').innerHTML =
           `<table class="table table-striped">
             <thead>
-              <tr>
-                <th scope="col">N°</th>
+              <tr class="table-row">
                 <th scope="col">Titre</th>
                 <th scope="col">Auteur</th>
               </tr>
@@ -37,16 +38,15 @@ document
             <tbody class="table-body">
             </tbody>
           </table>`
-        }
         
-        result.books.forEach(book => {
-          $('.table-body').innerHTML +=
-            '<tr>' +
-              '<th scope="row">' + book['id'] + '</th>' +
-              '<td><a href="#">' + book['title'] + '</a></td>' +
-              '<td><a href="#">' + book['author'] + '</a></td>' +
-            '</tr>'
-        })
+          result.books.forEach(book => {
+            $('.table-body').innerHTML +=
+              '<tr class="table-row">' +
+                '<td><a href="/catalog/book/' + book['id'] + '">' + book['title'] + '</a></td>' +
+                '<td><a href="/catalog/author/' + book['author_id'] + '">' + book['author'] + '</a></td>' +
+              '</tr>';
+          })
+        }
 			})
 			.catch((error) => {
 				console.log(error.message)

@@ -4,6 +4,7 @@
 
 {% block css %}
 {% load static %}
+<link rel="stylesheet" href="{% static 'css/books_authors_list.css' %}">
 {% endblock %}
 
 {% block content %}
@@ -12,7 +13,6 @@
 <table class="table table-striped">
   <thead>
     <tr>
-      <th scope="col">N°</th>
       <th scope="col">Nom & Prénom</th>
       <th scope="col">Date de naissance & mort</th>
       {% if perms.can_change_author and perms.can_delete_author %}
@@ -24,7 +24,6 @@
   <tbody>
     {% for author in authors_list %}
     <tr>
-      <th scope="row">{{ author.id }}</th>
       <td><a href="{{ author.get_absolute_url }}">{{ author.last_name }}, {{ author.first_name }}</a></td>
       <td>{{ author.date_of_birth }} - {{ author.date_of_death|default:'' }}</td>
       {% if perms.can_change_author and perms.can_delete_author %}

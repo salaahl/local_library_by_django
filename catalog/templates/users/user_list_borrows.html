@@ -9,7 +9,6 @@
 <table class="table table-striped">
   <thead>
     <tr>
-      <th scope="col">N°</th>
       <th scope="col">Titre</th>
       <th scope="col">Auteur</th>
       <th scope="col">Date de retour</th>
@@ -20,7 +19,6 @@
   <tbody>
     {% for borrow in borrows_list %}
     <tr>
-      <th scope="row">{{ borrow.book.id }}</th>
       <td><a href="{{ borrow.book.get_absolute_url }}">{{ borrow.book.title }}</a></td>
       <td><a href="{% url 'author-detail' borrow.book.author.id %}">{{ borrow.book.author }}</a></td>
       <td>{{ borrow.due_back }}</td>

@@ -14,8 +14,8 @@
   <body>
     <div class="container-fluid">
       <div class="row">
-        <div class="col-lg-2 d-flex justify-content-lg-center justify-content-between">
-          <nav class="navbar navbar-expand-lg navbar-light align-items-start w-100">
+        <div class="col-lg-2 d-flex justify-content-lg-center justify-content-between bg-dark">
+          <nav class="navbar navbar-expand-lg navbar-dark bg-dark align-items-start">
             <div class="container-fluid p-0 flex-lg-column h-100">
               <a class="navbar-brand m-0" href="/">Bibliothèque locale</a>
               <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
@@ -32,19 +32,19 @@
                   <!-- Le next s'ajoute à l'URL comme un paramètre. Il récupère le chemin depuis lequel l'utilisateur a cliqué et le renvoi dessus après avoir affiché la page demandée -->
                   <li class="nav-item"><a class="nav-link" href="{% url 'login' %}?next={{ request.path }}">Connexion</a></li>
                   {% endif %}
-                  <li class="border-top my-3"></li>
                   {% if perms.catalog.can_add_author %}
+                  <li class="border-top my-3"></li>
                   <li class="mb-1">
-                    <button class="btn btn-toggle align-items-center rounded collapsed" data-bs-toggle="collapse" data-bs-target="#create-collapse" aria-expanded="false">
+                    <button class="btn btn-toggle nav-link text-white align-items-center rounded collapsed" data-bs-toggle="collapse" data-bs-target="#create-collapse" aria-expanded="false">
                     Créer
                     </button>
                     <div class="collapse" id="create-collapse">
                       <ul class="btn-toggle-nav list-unstyled fw-normal pb-1 small">
                         <li class="nav-item"><a class="nav-link" href="{% url 'user-create' %}">Utilisateur</a></li>
-                        <li class="nav-item"><a class="nav-link link-dark rounded" href="{% url 'author-create' %}">Auteur</a></li>
-                        <li class="nav-item"><a class="nav-link link-dark rounded" href="{% url 'book-create' %}">Livre</a></li>
-                        <li class="nav-item"><a class="nav-link link-dark rounded" href="{% url 'book_instance-create' %}">Book instance</a></li>
-                        <li class="nav-item"><a class="nav-link link-dark rounded" href="{% url 'genre-create' %}">Genre</a></li>
+                        <li class="nav-item"><a class="nav-link rounded" href="{% url 'author-create' %}">Auteur</a></li>
+                        <li class="nav-item"><a class="nav-link rounded" href="{% url 'book-create' %}">Livre</a></li>
+                        <li class="nav-item"><a class="nav-link rounded" href="{% url 'book_instance-create' %}">Book instance</a></li>
+                        <li class="nav-item"><a class="nav-link rounded" href="{% url 'genre-create' %}">Genre</a></li>
                       </ul>
                     </div>
                   </li>
@@ -52,7 +52,7 @@
                 </ul>
                 {% if user.is_authenticated %}
                 <div class="user-div">
-                  <p style="text-align: center;">Utilisateur : {{ user.get_username }}</p>
+                  <p>Utilisateur : {{ user.get_username }}</p>
                   <a class="nav-link button" href="{% url 'logout' %}">Déconnexion</a>
                 </div>
                 {% endif %}
@@ -64,7 +64,7 @@
           {% block content %}
           {% endblock %}
           {% if is_paginated %}
-          <nav>
+          <nav class="nav-pagination">
             <ul class="pagination justify-content-center">
               {% if page_obj.has_previous %}
               <li class="page-item">

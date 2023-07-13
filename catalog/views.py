@@ -44,12 +44,14 @@ def index(request):
 
     if request.method == 'POST':
         books = []
-        query = Book.objects.filter(title__istartswith=request.POST.get('book')).values()[0:10]
-        
-        for book in query:
-            author = Author.objects.filter(pk=book['author_id'])[0]
-            book['author'] = str(author)
-            books.append(book)
+        if request.POST.get('book') != '':
+          query = Book.objects.filter(
+              title__istartswith=request.POST.get('book')).values()[0:10]
+  
+          for book in query:
+              author = Author.objects.filter(pk=book['author_id'])[0]
+              book['author'] = str(author)
+              books.append(book)
 
         return JsonResponse({'books': books})
 
@@ -228,28 +230,28 @@ class AuthorUpdate(PermissionRequiredMixin, UpdateView):
     permission_required = 'catalog.can_change_author'
     model = Author
     fields = ['first_name', 'last_name', 'date_of_birth', 'date_of_death']
-    template_name = '_create_update_form.html'
+    template_name = 'create_update_form.html'
 
 
 class BookUpdate(PermissionRequiredMixin, UpdateView):
     permission_required = 'catalog.can_change_book'
     model = Book
     fields = ['title', 'summary']
-    template_name = '_create_update_form.html'
+    template_name = 'create_update_form.html'
 
 
 class BookInstanceUpdate(PermissionRequiredMixin, UpdateView):
     permission_required = 'catalog.can_change_book_instance'
     model = BookInstance
     fields = ['first_name', 'last_name', 'date_of_birth', 'date_of_death']
-    template_name = '_create_update_form.html'
+    template_name = 'create_update_form.html'
 
 
 class GenreUpdate(PermissionRequiredMixin, UpdateView):
     permission_required = 'catalog.can_change_genre'
     model = Genre
     fields = ['name']
-    template_name = '_create_update_form.html'
+    template_name = 'create_update_form.html'
 
 
 def borrow_book(self, request):
@@ -318,25 +320,25 @@ class AuthorDelete(PermissionRequiredMixin, DeleteView):
     permission_required = 'catalog.can_delete_author'
     model = Author
     success_url = reverse_lazy('authors')
-    template_name = 'authors/delete_form.html'
+    template_name = 'delete_form.html'
 
 
 class BookDelete(PermissionRequiredMixin, DeleteView):
     permission_required = 'catalog.can_delete_book'
     model = Book
     success_url = reverse_lazy('books')
-    template_name = 'authors/delete_form.html'
+    template_name = 'delete_form.html'
 
 
 class BookInstanceDelete(PermissionRequiredMixin, DeleteView):
     permission_required = 'catalog.can_delete_book_instance'
     model = BookInstance
     success_url = reverse_lazy('books_instances')
-    template_name = 'authors/delete_form.html'
+    template_name = 'delete_form.html'
 
 
 class GenreDelete(PermissionRequiredMixin, DeleteView):
     permission_required = 'catalog.can_delete_genre'
     model = Genre
     success_url = reverse_lazy('genres')
-    template_name = 'authors/delete_form.html'
+    template_name = 'delete_form.html'

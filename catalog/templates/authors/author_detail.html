@@ -2,28 +2,27 @@
 
 {% block css %}
 {% load static %}
-<link rel="stylesheet" href="{% static 'css/author_detail.css' %}">
+<link rel="stylesheet" href="{% static 'css/book_author_detail.css' %}">
 {% endblock %}
 
 {% block content %}
 <div class="row">
   <div class="col">
   <h1>Auteur :</h1>
-
-  <p><strong>Nom :</strong> {{ author.last_name }}</p>
-  <p><strong>Prénom :</strong> {{ author.first_name }}</p>
-  <p><strong>Date de naissance :</strong> {{ author.date_of_birth }}</p>
-  <p><strong>Mort :</strong> {{ author.date_of_death }}</p>
+  <h5><strong>Nom :</strong> {{ author.last_name|upper }}</h5>
+  <h5><strong>Prénom :</strong> {{ author.first_name }}</h5>
+  <h5><strong>Date de naissance :</strong> {{ author.date_of_birth }}</h5>
+  <h5><strong>Mort :</strong> {{ author.date_of_death }}</h5>
 </div>
 </div>
 <div class="row">
-  <div class="col">
   <h3>Ses derniers livres :</h3>
-  <hr>
-  <table class="table table-striped">
+  <div class="separator"></div>
+  {% if author.book_set.all %}
+  <div class="col author-books">
+  <table class="table table-striped author-books">
     <thead>
       <tr>
-        <th scope="col">N°</th>
         <th scope="col">Titre</th>
         {% if perms.can_change_book and perms.can_delete_book %}
         <th scope="col">Mettre à jour</th>
@@ -33,9 +32,8 @@
     </thead>
     <tbody>
       <!-- Le slice permet de limiter les résultats -->
-      {% for book in author.book_set.all|slice:":5" %}
+      {% for book in author.book_set.all|slice:":10" %}
       <tr>
-        <th scope="row">{{ book.id }}</th>
         <td><a href="{{ book.get_absolute_url }}">{{ book.title }}</a></td>
         {% if perms.can_change_book and perms.can_delete_book %}
         <td><a href="{% url 'book-update' book.pk %}">Mettre à jour</a></td>
@@ -46,5 +44,8 @@
     </tbody>
   </table>
 </div>
+{% else %}
+<div>Cet auteur n'a pas encore rédigé de livres.</div>  
+{% endif %}
 </div>
 {% endblock %}

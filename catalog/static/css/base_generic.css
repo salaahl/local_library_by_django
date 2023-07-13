@@ -1,6 +1,25 @@
+@media (max-width: 991px) {
+  .navbar {
+    width: 100%;
+  }
+}
+
 @media (min-width: 992px) {
   .container-fluid > .row {
     height: 100%;
+  }
+
+  .navbar {
+    width: fit-content;
+  }
+
+  .button {
+    min-width: 150px;
+  }
+  
+  .user-div {
+    position: absolute;
+    text-align: center;
   }
 }
 
@@ -10,22 +29,51 @@ html, body, body > .container-fluid {
 
 a {
   color: inherit;
-  text-decoration: none;
 }
 
-a.active::after {
-  content: "•";
-  margin-left: 5%;
-  color: green;
+a:hover {
+  filter: invert(1);
 }
 
-.page-link {
-  color: black;
+ul > .nav-item > .nav-link {
+  padding-left: 0!important;
+  padding-top: 1rem;
 }
 
-.active>.page-link, .page-link.active {
-  background-color: black;
+.btn-toggle {
+  padding-left: 0!important;
+}
+.nav-pagination {
+  position: absolute;
+  bottom: 0;
+}
+
+.col-lg-2 {
   color: white;
+}
+
+.col-lg-10 {
+  min-height: 100%;
+  overflow: auto;
+}
+
+table {
+  width: calc(100% + 1rem)!important;
+  margin-left: -0.5rem;
+  margin-right: -0.5rem;
+}
+
+h1, h2, h3, h4, h5, h6 {
+  line-height: 1.2;
+}
+
+h2, h3, h4, h5, h6 {
+  padding: 0.5rem 0 0.5rem 0;
+  font-weight: 300;
+}
+
+h1 {
+  font-weight: 400;
 }
 
 .button {
@@ -71,15 +119,11 @@ a.active::after {
   fill: #06f;
 }
 
-@media (min-width: 768px) {
-  .button {
-    min-width: 150px;
-  }
-}
-
-h1, h2, h3, h4, h5, h6 {
-  font-weight: 300;
-  line-height: 1.2;
+.separator {
+  height: 0;
+  width: 80%;
+  margin: 0 10% 0 10%;
+  border: 2px solid;
 }
 
 .logo {
@@ -90,11 +134,11 @@ div:has(> nav) {
   background-color: whitesmoke;
 }
 
-.navbar {
-  height: 100%;
+.user-div {
+  bottom: 5%;
 }
 
-.user-div {
-  position: absolute;
-  bottom: 5%;
+.user-div > a {
+  background-color: indianred;
+  color: white;
 }

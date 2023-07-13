@@ -1,0 +1,71 @@
+@media (max-width: 991px) {
+  .col-lg-10 > .row:first-child {
+    margin-bottom: 10%;
+  }
+}
+
+.col-lg-10 {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+}
+
+.col-lg-10 .row {
+  padding-top: 0.5rem;
+}
+
+.col-lg-10 .row:first-child {
+  min-height: 30vh;
+  margin: -0.5rem -0.5rem 0.5rem -0.5rem;
+  box-shadow: rgba(0, 0, 0, 0.4) 0px 20px;
+}
+
+.col-lg-10 .row:nth-child(2) {
+  min-height: 50vh;
+}
+
+h1, h3 {
+  text-transform: uppercase;
+}
+
+h3 {
+  margin: 0;
+  align-self: end;
+  text-align: center;
+}
+
+table {
+  text-align: center;
+}
+
+.book-instance {
+  display: flex;
+  justify-content: space-around;
+  align-items: center;
+}
+
+.book-instance > div {
+  width: 50%;
+}
+
+.book-status > div {
+  width: fit-content;
+  margin: auto;
+  padding: 2%;
+  border-radius: 50px;
+  color: white;
+  font-weight: bold;
+}
+
+.book-aside {
+  height: fit-content;
+  padding: 2%;
+  border-radius: 50px;
+}
+
+.login {
+  display: flex;
+  align-items: center;
+  justify-content: space-around;
+  flex-direction: column;
+}
