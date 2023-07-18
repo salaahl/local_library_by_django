@@ -9,13 +9,13 @@ from django.contrib.auth.decorators import login_required, permission_required
 from django.contrib.auth.mixins import LoginRequiredMixin, PermissionRequiredMixin
 import datetime
 from django.views.generic.edit import UpdateView, DeleteView
-from sendgrid import SendGridAPIClient
-from sendgrid.helpers.mail import Mail
+# from sendgrid import SendGridAPIClient
+# from sendgrid.helpers.mail import Mail
 from django.http import JsonResponse
 
-
+"""
 def send_mail(from_email, to_emails, subject, html_content):
-    """
+    ""
     Easy wrapper for sending a single message to a recipient list. All members
     of the recipient list will see the other recipients in the 'To' field.
 
@@ -24,7 +24,7 @@ def send_mail(from_email, to_emails, subject, html_content):
 
     Note: The API for this method is frozen. New code wanting to extend the
     functionality should use the EmailMessage class directly.
-    """
+    ""
     message = Mail(from_email=from_email,
                    to_emails=to_emails,
                    subject=subject,
@@ -37,6 +37,7 @@ def send_mail(from_email, to_emails, subject, html_content):
         print(response.headers)
     except Exception as e:
         print(e.message)
+"""
 
 
 def index(request):
@@ -95,8 +96,7 @@ def create_user(request):
 
         if form.is_valid():
             form.save()
-            send_mail('salsdu19@gmail.com', 'Sujet : Votre compte.',
-                      '<strong>Message : Compte créé</strong>')
+           # send_mail('salsdu19@gmail.com', 'Sujet : Votre compte.', '<strong>Message : Compte créé</strong>')
 
             return HttpResponseRedirect(reverse('index'))
 

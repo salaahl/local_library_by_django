@@ -1,1 +1,1 @@
-web: python manage.py migrate && python manage.py collectstatic && gunicorn django_project.wsgi && pip install sendgrid-django
+web: python manage.py migrate && python manage.py collectstatic && gunicorn django_project.wsgi && pip install sendgrid
