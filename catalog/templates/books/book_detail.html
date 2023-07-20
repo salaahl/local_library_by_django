@@ -56,7 +56,7 @@
   {% endfor %}
 {% else %}
   <div class="login">
-    Veuillez vous connecter pour accéder au statut du document.<br>
+    <p>Veuillez vous connecter pour accéder au statut du document.</p>
     <a class="button" href="{% url 'login' %}?next={% url 'book-detail' book.id %}">Se connecter</a>
   </div>
 {% endif %}
