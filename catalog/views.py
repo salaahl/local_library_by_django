@@ -189,7 +189,7 @@ class BookListView(generic.ListView):
     model = Book
     context_object_name = 'books_list'
     queryset = Book.objects.all()
-    paginate_by = 1
+    paginate_by = 10
     template_name = 'books/books_list.html'
 
 
