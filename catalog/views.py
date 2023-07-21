@@ -12,6 +12,7 @@ from django.views.generic.edit import UpdateView, DeleteView
 #from sendgrid import SendGridAPIClient
 #from sendgrid.helpers.mail import Mail
 from django.http import JsonResponse
+import json
 """
 def send_mail(from_email, to_emails, subject, html_content):
     ""
@@ -192,10 +193,16 @@ class BookListView(generic.ListView):
     template_name = 'books/books_list.html'
 
     def post(self, request):
+        books = []
         if request.POST.get('filter') == 'Titre':
-            books = Book.objects.all().order_by('title')
+            books_query = Book.objects.all().order_by('title').values()
         elif request.POST.get('filter') == 'Auteur':
-            books = Book.objects.all().order_by('author')
+            books_query = Book.objects.all().order_by('author').values()
+
+        for book in books_query:
+            author = Author.objects.filter(pk=book['author_id'])[0]
+            book['author'] = str(author)
+            books.append(book)
 
         return JsonResponse({'books': books})
 

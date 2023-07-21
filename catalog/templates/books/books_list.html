@@ -2,6 +2,11 @@
 
 {% block title %}Livres{% endblock %}
 
+{% block css %}
+{% load static %}
+<link rel="stylesheet" href="{% static 'css/books_authors_list.css' %}">
+{% endblock %}
+
 {% block content %}
 <h1>Livres :</h1>
 {% if books_list %}
@@ -9,8 +14,8 @@
 <table class="table table-striped">
   <thead>
     <tr>
-      <th scope="col" class="search-filter">Titre</th>
-      <th scope="col" class="search-filter">Auteur</th>
+      <th scope="col"><button class="search-filter">Titre</button></th>
+      <th scope="col"><button class="search-filter">Auteur</button></th>
       {% if perms.can_change_book and perms.can_delete_book %}
       <th scope="col">Mettre à jour</th>
       <th scope="col">Supprimer</th>
