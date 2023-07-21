@@ -12,7 +12,6 @@ from django.views.generic.edit import UpdateView, DeleteView
 #from sendgrid import SendGridAPIClient
 #from sendgrid.helpers.mail import Mail
 from django.http import JsonResponse
-
 """
 def send_mail(from_email, to_emails, subject, html_content):
     ""
@@ -46,13 +45,13 @@ def index(request):
     if request.method == 'POST':
         books = []
         if request.POST.get('book') != '':
-          query = Book.objects.filter(
-              title__istartswith=request.POST.get('book')).values()[0:10]
-  
-          for book in query:
-              author = Author.objects.filter(pk=book['author_id'])[0]
-              book['author'] = str(author)
-              books.append(book)
+            query = Book.objects.filter(
+                title__istartswith=request.POST.get('book')).values()[0:10]
+
+            for book in query:
+                author = Author.objects.filter(pk=book['author_id'])[0]
+                book['author'] = str(author)
+                books.append(book)
 
         return JsonResponse({'books': books})
 
@@ -96,7 +95,7 @@ def create_user(request):
 
         if form.is_valid():
             form.save()
-           # send_mail('salsdu19@gmail.com', 'Sujet : Votre compte.', '<strong>Message : Compte créé</strong>')
+            # send_mail('salsdu19@gmail.com', 'Sujet : Votre compte.', '<strong>Message : Compte créé</strong>')
 
             return HttpResponseRedirect(reverse('index'))
 
@@ -191,6 +190,14 @@ class BookListView(generic.ListView):
     queryset = Book.objects.all()
     paginate_by = 10
     template_name = 'books/books_list.html'
+
+    def post(self, request):
+        if request.POST.get('filter') == 'Titre':
+            books = Book.objects.all().order_by('title')
+        elif request.POST.get('filter') == 'Auteur':
+            books = Book.objects.all().order_by('author')
+
+        return JsonResponse({'books': books})
 
 
 class BookDetailView(generic.DetailView):

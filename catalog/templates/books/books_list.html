@@ -5,11 +5,12 @@
 {% block content %}
 <h1>Livres :</h1>
 {% if books_list %}
+<form>{% csrf_token %}</form>
 <table class="table table-striped">
   <thead>
     <tr>
-      <th scope="col">Titre</th>
-      <th scope="col">Auteur</th>
+      <th scope="col" class="search-filter">Titre</th>
+      <th scope="col" class="search-filter">Auteur</th>
       {% if perms.can_change_book and perms.can_delete_book %}
       <th scope="col">Mettre à jour</th>
       <th scope="col">Supprimer</th>
@@ -19,7 +20,6 @@
   <tbody>
     {% for book in books_list %}
     <tr>
-      
       <td><a href="{{ book.get_absolute_url }}">{{ book.title }}</a></td>
       <td><a href="{% url 'author-detail' book.author.id %}">{{ book.author }}</a></td>
       {% if perms.can_change_book and perms.can_delete_book %}
@@ -33,4 +33,9 @@
 {% else %}
 <p>There are no books in the library.</p>
 {% endif %}
+{% endblock %}
+
+{% block js %}
+  {% load static %}
+  <script src="{% static 'js/book_list_filters.js' %}"></script>
 {% endblock %}
