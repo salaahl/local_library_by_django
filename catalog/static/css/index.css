@@ -1,3 +1,7 @@
+body .container-fluid > .row > div:last-child > .search-container ~ * {
+  transition: filter 1s, opacity 1s;
+}
+
 .search-container {
   position: relative;
   margin-bottom: 1rem;
@@ -8,8 +12,6 @@
   width: 100%;
   margin-top: 1%;
   overflow: hidden;
-  border-radius: 10px;
-  border: 2px solid;
   opacity: 0;
   transition: all 1s;
 }

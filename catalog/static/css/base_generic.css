@@ -1,14 +1,67 @@
+@media (prefers-color-scheme: dark) {
+  :root {
+    --font-color: white;
+    --bg-color: rgb(52,58,64);
+    --separator-color: rgb(248,249,250);
+  }
+  
+  html, body {
+    background-color: rgb(52,58,64, 0.7);
+  }
+
+  .navbar-toggler-icon {
+    background-image: url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 30 30'%3e%3cpath stroke='rgba%28255, 255, 255, 0.75%29' stroke-linecap='round' stroke-miterlimit='10' stroke-width='2' d='M4 7h22M4 15h22M4 23h22'/%3e%3c/svg%3e");
+  }
+  
+  .nav-link, .user-div {
+    color: rgb(255, 255, 255, 0.5);
+  }
+
+  .navbar-brand, .nav-link.active {
+    color: rgb(255, 255, 255, 1)!important;
+  }
+
+  .table tbody {
+    background-color: rgb(52,58,64);
+  }
+  
+  .table td {
+    color: white;
+    background-color: transparent;
+  }
+}
+
+@media (prefers-color-scheme: light) {
+  :root {
+    --bg-color: rgb(248,249,250);
+    --h1-color: rgb(52,58,64);
+    --separator-color: rgb(52,58,64);
+  }
+
+  .user-div {
+    color: rgb(0, 0, 0, 0.5);
+  }
+}
+
 @media (max-width: 991px) {
+  body .container-fluid > .row > div:first-child {
+    height: fit-content;
+  }
+  
+  body .container-fluid > .row > div:first-child, body .container-fluid > .row > div:last-child {
+    width: 100%;
+  }
+  
   .navbar {
     width: 100%;
   }
 }
 
 @media (min-width: 992px) {
-  .container-fluid > .row {
+  .container-fluid, body .container-fluid > .row {
     height: 100%;
   }
-
+  
   .navbar {
     width: fit-content;
   }
@@ -23,16 +76,50 @@
   }
 }
 
-html, body, body > .container-fluid {
+@media (min-width: 991px) and (max-width: 1024px) {
+  body .container-fluid > .row > div:first-child {
+    width: 25%;
+  }
+
+  body .container-fluid > .row > div:last-child {
+    width: 75%;
+  }
+}
+
+@media (min-width: 1025px) {
+  body .container-fluid > .row > div:first-child {
+    width: 20%;
+  }
+
+  body .container-fluid > .row > div:last-child {
+    width: 80%;
+  }
+}
+
+html, body {
   height: 100%;
+  font-size: 105%;
+  color: var(--font-color);
+}
+
+.form-control:focus {
+  box-shadow: none;
+}
+
+body .container-fluid > .row > div:first-child {
+  background-color: var(--bg-color);
+}
+
+body .container-fluid > .row > div:last-child {
+  overflow: hidden;
+}
+
+h1 {
+ color: var(--h1-color) 
 }
 
 a {
   color: inherit;
-}
-
-a:hover {
-  filter: invert(1);
 }
 
 ul > .nav-item > .nav-link {
@@ -48,19 +135,8 @@ ul > .nav-item > .nav-link {
   bottom: 0;
 }
 
-.col-lg-2 {
-  color: white;
-}
-
-.col-lg-10 {
-  min-height: 100%;
-  overflow: auto;
-}
-
 table {
-  width: calc(100% + 1rem)!important;
-  margin-left: -0.5rem;
-  margin-right: -0.5rem;
+  border: 2px solid
 }
 
 h1, h2, h3, h4, h5, h6 {
@@ -128,10 +204,6 @@ h1 {
 
 .logo {
   font-weight: bold;
-}
-
-div:has(> nav) {
-  background-color: whitesmoke;
 }
 
 .user-div {

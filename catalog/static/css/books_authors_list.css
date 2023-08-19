@@ -7,11 +7,10 @@
 }
 
 .search-filter {
-  display: flex;
   width: 100%;
   padding: 0;
   text-align: start;
-  text-transform: uppercase;
+  font-weight: inherit;
   border: 0px;
   background: transparent;
 }
@@ -23,5 +22,5 @@
   padding-right: 3px;
   vertical-align: middle;
   font-weight: 900;
-  margin-left: 1%;
+  margin-left: 2%;
 }

@@ -15,9 +15,7 @@
     <h5><strong>ISBN :</strong> {{ book.isbn }}</h5>
     <h5><strong>Description :</strong><br>{{ book.summary }}</h5>
   </div>
-</div>
-<div class="row">
-  <div class="col">
+<div class="col">
   <h3>Exemplaires :</h3>
   {% if user.is_authenticated %}
   <!-- "_set"(.all) est une fonction de Django permettant de retrouver la partie "Many" d'une relation (étant donné que la relation OneToMany n'a été déclarée que du côté One donc du côté du model "book"). Ainsi, je vais pouvour retrouver tous les enregistrements "bookinstance" associés à mon objet "book". -->
@@ -60,6 +58,5 @@
     <a class="button" href="{% url 'login' %}?next={% url 'book-detail' book.id %}">Se connecter</a>
   </div>
 {% endif %}
-  </div>
 </div>
 {% endblock %}

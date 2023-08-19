@@ -7,45 +7,44 @@
 
 {% block content %}
 <div class="row">
-  <div class="col">
-  <h1>Auteur :</h1>
-  <h5><strong>Nom :</strong> {{ author.last_name|upper }}</h5>
-  <h5><strong>Prénom :</strong> {{ author.first_name }}</h5>
-  <h5><strong>Date de naissance :</strong> {{ author.date_of_birth }}</h5>
-  <h5><strong>Mort :</strong> {{ author.date_of_death }}</h5>
-</div>
-</div>
-<div class="row">
-  <h3>Ses derniers livres :</h3>
-  <div class="separator"></div>
-  {% if author.book_set.all %}
-  <div class="col author-books">
-  <table class="table table-striped author-books">
-    <thead>
-      <tr>
-        <th scope="col">Titre</th>
-        {% if perms.can_change_book and perms.can_delete_book %}
-        <th scope="col">Mettre à jour</th>
-        <th scope="col">Supprimer</th>
-        {% endif %}
-      </tr>
-    </thead>
-    <tbody>
-      <!-- Le slice permet de limiter les résultats -->
-      {% for book in author.book_set.all|slice:":10" %}
-      <tr>
-        <td><a href="{{ book.get_absolute_url }}">{{ book.title }}</a></td>
-        {% if perms.can_change_book and perms.can_delete_book %}
-        <td><a href="{% url 'book-update' book.pk %}">Mettre à jour</a></td>
-        <td><a href="{% url 'book-delete' book.pk %}">Supprimer</a></td>
-        {% endif %}
-      </tr>
-      {% endfor %}
-    </tbody>
-  </table>
-</div>
-{% else %}
-<div>Cet auteur n'a pas encore rédigé de livres.</div>  
-{% endif %}
+  <section class="col">
+    <h1>Auteur</h1>
+    <h5><strong>Nom :</strong> {{ author.last_name|upper }}</h5>
+    <h5><strong>Prénom :</strong> {{ author.first_name }}</h5>
+    <h5><strong>Date de naissance :</strong> {{ author.date_of_birth }}</h5>
+    <h5><strong>Mort :</strong> {{ author.date_of_death }}</h5>
+  </section>
+  <section class="col">
+    <h3>Ses derniers livres :</h3>
+    {% if author.book_set.all %}
+    <div class="author-books">
+    <table class="table table-striped author-books">
+      <thead>
+        <tr>
+          <th scope="col">Titre</th>
+          {% if perms.can_change_book and perms.can_delete_book %}
+          <th scope="col">Mettre à jour</th>
+          <th scope="col">Supprimer</th>
+          {% endif %}
+        </tr>
+      </thead>
+      <tbody>
+        <!-- Le slice permet de limiter les résultats -->
+        {% for book in author.book_set.all|slice:":10" %}
+        <tr>
+          <td><a href="{{ book.get_absolute_url }}">{{ book.title }}</a></td>
+          {% if perms.can_change_book and perms.can_delete_book %}
+          <td><a href="{% url 'book-update' book.pk %}">Mettre à jour</a></td>
+          <td><a href="{% url 'book-delete' book.pk %}">Supprimer</a></td>
+          {% endif %}
+        </tr>
+        {% endfor %}
+      </tbody>
+    </table>
+  </div>
+  {% else %}
+  <p style="text-align: center; margin-top: 5%;">Cet auteur n'a pas encore rédigé de livres.</p>  
+  {% endif %}
+  </section>
 </div>
 {% endblock %}

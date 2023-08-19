@@ -15,8 +15,8 @@
   <body>
     <div class="container-fluid">
       <div class="row">
-        <div class="col-lg-2 d-flex justify-content-lg-center justify-content-between bg-dark">
-          <nav class="navbar navbar-expand-lg navbar-dark bg-dark align-items-start">
+        <div class="d-flex justify-content-lg-center justify-content-between">
+          <nav class="navbar navbar-expand-lg align-items-start">
             <div class="container-fluid p-0 flex-lg-column h-100">
               <a class="navbar-brand m-0" href="/">Bibliothèque locale</a>
               <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
@@ -36,7 +36,7 @@
                   {% if perms.catalog.can_add_author %}
                   <li class="border-top my-3"></li>
                   <li class="mb-1">
-                    <button class="btn btn-toggle nav-link text-white align-items-center rounded collapsed" data-bs-toggle="collapse" data-bs-target="#create-collapse" aria-expanded="false">
+                    <button class="btn btn-toggle nav-link align-items-center rounded collapsed" data-bs-toggle="collapse" data-bs-target="#create-collapse" aria-expanded="false">
                     Créer
                     </button>
                     <div class="collapse" id="create-collapse">
@@ -61,7 +61,7 @@
             </div>
           </nav>
         </div>
-        <div class="col-lg-10 bg-white">
+        <div>
           {% block content %}
           {% endblock %}
           {% if is_paginated %}
