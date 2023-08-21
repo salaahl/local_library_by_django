@@ -1,6 +1,7 @@
 {% extends "base_generic.html" %}
 
 {% block content %}
+<main>
   <h1>Renouveler : {{ book_instance.book.title }}</h1>
   <p>Emprunteur : {{ book_instance.borrower }}</p>
   <p {% if book_instance.is_overdue %} class="text-danger"{% endif %}>Due date: {{ book_instance.due_back }}</p>
@@ -12,4 +13,5 @@
     </table>
     <input type="submit" value="Submit">
   </form>
+</main>
 {% endblock %}

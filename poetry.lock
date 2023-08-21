@@ -39,6 +39,17 @@ argon2 = ["argon2-cffi (>=19.1.0)"]
 bcrypt = ["bcrypt"]
 
 [[package]]
+name = "python-dotenv"
+version = "1.0.0"
+description = "Read key-value pairs from a .env file and set them as environment variables"
+category = "main"
+optional = false
+python-versions = ">=3.8"
+
+[package.extras]
+cli = ["click (>=5.0)"]
+
+[[package]]
 name = "python-http-client"
 version = "3.3.7"
 description = "HTTP REST client, simplified for Python"
@@ -93,17 +104,19 @@ python-versions = ">=3.7"
 [metadata]
 lock-version = "1.1"
 python-versions = "^3.8"
-content-hash = "80c46410b19be310009a76c07a36423e0c01a8096f898b84ed357dfa11dbc10c"
+content-hash = "9782c969a9cdf1716524d6434271ddd34e2d05adb420ef17466b1c6ec75febb5"
 
 [metadata.files]
 asgiref = []
 dj-database-url = []
 django = []
+python-dotenv = [
+    {file = "python-dotenv-1.0.0.tar.gz", hash = "sha256:a8df96034aae6d2d50a4ebe8216326c61c3eb64836776504fcca410e5937a3ba"},
+    {file = "python_dotenv-1.0.0-py3-none-any.whl", hash = "sha256:f5971a9226b701070a4bf2c38c89e5a3f0d64de8debda981d1db98583009122a"},
+]
 python-http-client = []
 pytz = []
 sendgrid = []
 sqlparse = []
-starkbank-ecdsa = [
-    {file = "starkbank-ecdsa-2.2.0.tar.gz", hash = "sha256:9399c3371b899d4a235b68a1ed7919d202fbf024bd2c863ae8ebdad343c2a63a"},
-]
+starkbank-ecdsa = []
 typing-extensions = []

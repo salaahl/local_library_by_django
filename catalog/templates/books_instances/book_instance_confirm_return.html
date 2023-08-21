@@ -1,7 +1,7 @@
 {% extends "base_generic.html" %}
 
 {% block content %}
-
+<main>
 <h1>Return book instance</h1>
 
 <p>Are you sure you want to return this book instance: {{ book_instance }} ?</p>
@@ -10,5 +10,5 @@
   {% csrf_token %}
   <input type="submit" value="Yes, delete.">
 </form>
-
+</main>
 {% endblock %}

@@ -15,10 +15,10 @@
   <body>
     <div class="container-fluid">
       <div class="row">
-        <div class="d-flex justify-content-lg-center justify-content-between">
+        <div id="navbar-container" class="d-flex justify-content-lg-center justify-content-between">
           <nav class="navbar navbar-expand-lg align-items-start">
             <div class="container-fluid p-0 flex-lg-column h-100">
-              <a class="navbar-brand m-0" href="/">Bibliothèque locale</a>
+              <a id="navbar-brand" class="m-0" href="/">Bibliothèque locale</a>
               <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
               <span class="navbar-toggler-icon"></span>
               </button>
@@ -29,9 +29,6 @@
                   <li class="nav-item"><a class="nav-link" href="{% url 'authors' %}">Auteurs</a></li>
                   {% if user.is_authenticated %}
                   <li class="nav-item"><a class="nav-link" href="{% url 'my-borrowed' %}">Mes emprunts</a></li>
-                  {% else %}
-                  <!-- Le next s'ajoute à l'URL comme un paramètre. Il récupère le chemin depuis lequel l'utilisateur a cliqué et le renvoi dessus après avoir affiché la page demandée -->
-                  <li class="nav-item"><a class="nav-link" href="{% url 'login' %}?next={{ request.path }}">Connexion</a></li>
                   {% endif %}
                   {% if perms.catalog.can_add_author %}
                   <li class="border-top my-3"></li>
@@ -51,61 +48,66 @@
                   </li>
                   {% endif %}
                 </ul>
-                {% if user.is_authenticated %}
-                <div class="user-div">
+                <div id="user-div">
+                  {% if user.is_authenticated %}
                   <p>Utilisateur : {{ user.get_username }}</p>
                   <a class="nav-link button" href="{% url 'logout' %}">Déconnexion</a>
+                  {% else %}
+                  <!-- Le next s'ajoute à l'URL comme un paramètre. Il récupère le chemin depuis lequel l'utilisateur a cliqué et le renvoie dessus après coup -->
+                  <a class="nav-link button" href="{% url 'login' %}?next={{ request.path }}">Connexion</a>
+                  {% endif %}
                 </div>
-                {% endif %}
               </div>
             </div>
           </nav>
         </div>
-        <div>
+        <div id="page-container">
           {% block content %}
           {% endblock %}
           {% if is_paginated %}
-          <nav class="nav-pagination">
-            <ul class="pagination justify-content-center">
-              {% if page_obj.has_previous %}
-              <li class="page-item">
-                <a class="page-link" href="?page=1">
-                First
-                </a>
-              </li>
-              <li class="page-item">
-                <a class="page-link" href="?page={{ page_obj.previous_page_number }}">
-                Previous
-                </a>
-              </li>
-              {% endif %}
-              {% for page_number in page_obj.paginator.page_range %}
-              {% if page_number <= page_obj.number|add:3 and page_number >= page_obj.number|add:-3 %}
-              {% if page_obj.number == page_number %}
-              <li class="page-item active">
-                {% else %}
-              <li class="page-item">
+          <aside>
+            <nav class="nav-pagination">
+              <ul class="pagination justify-content-center">
+                {% if page_obj.has_previous %}
+                <li class="page-item">
+                  <a class="page-link" href="?page=1">
+                  First
+                  </a>
+                </li>
+                <li class="page-item">
+                  <a class="page-link" href="?page={{ page_obj.previous_page_number }}">
+                  Previous
+                  </a>
+                </li>
                 {% endif %}
-                <a class="page-link" href="?page={{ page_number }}">
-                {{ page_number }}
-                </a>
-              </li>
-              {% endif %}
-              {% endfor %}
-              {% if page_obj.has_next %}
-              <li class="page-item">
-                <a class="page-link" href="?page={{ page_obj.next_page_number }}">
-                Next
-                </a>
-              </li>
-              <li class="page-item">
-                <a class="page-link" href="?page={{ page_obj.paginator.num_pages }}">
-                Last
-                </a>
-              </li>
-              {% endif %}
-            </ul>
-          </nav>
+                {% for page_number in page_obj.paginator.page_range %}
+                {% if page_number <= page_obj.number|add:3 and page_number >= page_obj.number|add:-3 %}
+                {% if page_obj.number == page_number %}
+                <li class="page-item active">
+                  {% else %}
+                <li class="page-item">
+                  {% endif %}
+                  <a class="page-link" href="?page={{ page_number }}">
+                  {{ page_number }}
+                  </a>
+                </li>
+                {% endif %}
+                {% endfor %}
+                {% if page_obj.has_next %}
+                <li class="page-item">
+                  <a class="page-link" href="?page={{ page_obj.next_page_number }}">
+                  Next
+                  </a>
+                </li>
+                <li class="page-item">
+                  <a class="page-link" href="?page={{ page_obj.paginator.num_pages }}">
+                  Last
+                  </a>
+                </li>
+                {% endif %}
+              </ul>
+            </nav>
+          </aside>
           {% endif %}
         </div>
       </div>
@@ -113,6 +115,7 @@
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js" integrity="sha384-geWF76RCwLtnZ8qwWowPQNguL3RmwHVBC9FhGdlKrxdiJJigb/j/68SIy3Te4Bkz" crossorigin="anonymous"></script>
     <script src="{% static 'js/active_page.js' %}"></script>
     {% block js %}
+    <script src="https://unpkg.com/css-doodle@0.35.0/css-doodle.min.js"></script>
     {% endblock %}
   </body>
 </html>

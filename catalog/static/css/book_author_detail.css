@@ -1,43 +1,49 @@
 @media (max-width: 991px) {
-  body .container-fluid > .row > div:last-child > .row > .col:last-child {
+  #page-container > main.row > .col:last-child {
     margin-top: 10%;
+  }
+
+  .book-aside > .button {
+    margin: 5% auto;
   }
 }
 
 @media (min-width: 992px) {
-  body .container-fluid > .row > div:last-child > .row {
-    height: 100%;
+  #page-container > main.row {
+    min-height: 100%;
   }
-}
 
-body .container-fluid > .row > div:last-child > .row {
-  flex-direction: column;
-}
-
-body .container-fluid > .row > div:last-child > .row > .col:first-child {
-  box-shadow: var(--separator-color) -20px 20px 0px;
-}
-
-body .container-fluid > .row > div:last-child > .row > .col:last-child {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
+  .book-aside > .button {
+    margin: 2% auto;
+  }
 }
 
 h1, h3 {
   text-transform: uppercase;
 }
 
-h3 {
-  margin: 0;
-  text-align: center;
+#page-container > main.row {
+  flex-direction: column;
 }
 
-table {
+#detail-card {
+  margin: 1% auto;
+  padding: 0.5rem;
   text-align: center;
+  background-color: var(--card-bg);
+  border: 5px solid var(--card-border-color);
+  border-radius: 5px;
+  filter: drop-shadow(-5px 30px 0px rgb(0, 0, 0, 0.1));
 }
 
+#page-container > main.row > .col:last-child {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+}
+
+/* CSS spécifique à la page d'un livre */
 .book-instance {
   display: flex;
   justify-content: space-around;

@@ -6,22 +6,24 @@
 {% endblock %}
 
 {% block content %}
-<div class="row">
-  <div class="col">
-    <h1>{{ book.title }}</strong></h1>
-    <h5><strong>Auteur :</strong> <a href="{% url 'author-detail' book.author.pk %}">{{ book.author }}</a></h5>
-    <h5><strong>Langage :</strong> {{ book.language }}</h5>
-    <h5><strong>Genre :</strong> {{ book.genre.all|join:", " }}</h5>
-    <h5><strong>ISBN :</strong> {{ book.isbn }}</h5>
-    <h5><strong>Description :</strong><br>{{ book.summary }}</h5>
-  </div>
-<div class="col">
+<main class="row">
+  <section class="col">
+    <div id="detail-card">
+      <h1>{{ book.title }}</strong></h1>
+      <h5><strong>Auteur :</strong> <a href="{% url 'author-detail' book.author.pk %}">{{ book.author }}</a></h5>
+      <h5><strong>Langage :</strong> {{ book.language }}</h5>
+      <h5><strong>Genre :</strong> {{ book.genre.all|join:", " }}</h5>
+      <h5><strong>ISBN :</strong> {{ book.isbn }}</h5>
+      <h5><strong>Description :</strong><br>{{ book.summary }}</h5>
+    </div>
+  </section>
+<section class="col">
   <h3>Exemplaires :</h3>
   {% if user.is_authenticated %}
   <!-- "_set"(.all) est une fonction de Django permettant de retrouver la partie "Many" d'une relation (étant donné que la relation OneToMany n'a été déclarée que du côté One donc du côté du model "book"). Ainsi, je vais pouvour retrouver tous les enregistrements "bookinstance" associés à mon objet "book". -->
   {% for copy in book.bookinstance_set.all %}
     <div class="separator"></div>
-    <div class="book-instance">
+    <article class="book-instance">
       <div class="book-status">
         <div class="{% if copy.status == 'a' %}bg-success{% elif copy.status == 'm' %}bg-danger{% else %}bg-warning{% endif %}">
           {{ copy.get_status_display }}
@@ -48,15 +50,16 @@
         </p>
         {% endif %}
         <p><strong>Date d'impression :</strong> {{ copy.imprint }}</p>
-        <p class="text-muted"><strong>Identifiant :</strong> {{ copy.id }}</p>
+        <p style="opacity: 0.5;"><strong>Identifiant :</strong> {{ copy.id }}</p>
       </div>
-    </div>
+    </article>
   {% endfor %}
 {% else %}
   <div class="login">
     <p>Veuillez vous connecter pour accéder au statut du document.</p>
     <a class="button" href="{% url 'login' %}?next={% url 'book-detail' book.id %}">Se connecter</a>
   </div>
+</section>
 {% endif %}
-</div>
+</main>
 {% endblock %}

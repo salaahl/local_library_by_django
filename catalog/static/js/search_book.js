@@ -11,7 +11,7 @@ document
         return document.querySelector(id);
     };
 
-    let body = document.querySelectorAll("body .container-fluid > .row > div:last-child > .search-container ~ *");
+    let body = document.querySelectorAll("#page-container > #search-container ~ *");
 
     timer = setTimeout(function() {
         if ($('[name=search]').value.length > 1) {
@@ -19,8 +19,8 @@ document
                 content.style.filter = 'blur(5px) opacity(0)'
             })
 
-            $('.search-results').innerHTML = '';
-            $('.search-results').style.opacity = '0';
+            $('#search-results').innerHTML = '';
+            $('#search-results').style.opacity = '0';
 
             let formData = new FormData();
             formData.append('book', $("[name=search]").value);
@@ -37,9 +37,9 @@ document
             fetch(request)
                 .then(response => response.json())
                 .then(result => {
-                  $('.search-results').style.opacity = '1';
+                  $('#search-results').style.opacity = '1';
                     if (result.books != '') {
-                        $('.search-results').innerHTML =
+                        $('#search-results').innerHTML =
                             `<table class="table table-striped">
                             <thead>
                               <tr class="table-row">
@@ -52,14 +52,14 @@ document
                           </table>`
 
                         result.books.forEach(book => {
-                            $('.table-body').innerHTML +=
+                            $('tbody').innerHTML +=
                                 '<tr class="table-row">' +
-                                '<td><a href="/catalog/book/' + book['id'] + '">' + book['title'] + '</a></td>' +
-                                '<td><a href="/catalog/author/' + book['author_id'] + '">' + book['author'] + 
+                                '<td><a href="/catalog/book/' + book['id'] + '">' + book['title'] +                                   '</a></td>' +
+                                '<td><a href="/catalog/author/' + book['author_id'] + '">' +                                           book['author'] + 
                               '</a></td>' + '</tr>';
                         })
                     } else {
-                      $('.search-results').innerHTML = 'Aucun résultat';
+                      $('#search-results').innerHTML = 'Aucun résultat';
                     }
                 })
                 .catch((error) => {
@@ -72,7 +72,7 @@ document
             body.forEach(content => {
                 content.style.filter = 'blur(0px) opacity(1)'
             })
-            $('.search-results').innerHTML = '';
+            $('#search-results').innerHTML = '';
         }
     }, 600);
 });

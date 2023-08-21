@@ -3,7 +3,8 @@
 {% block title %}Mes emprunts{% endblock %}
 
 {% block content %}
-<h1>Documents empruntés :</h1>
+<main>
+<h1>Documents empruntés</h1>
 
 {% if borrows_list %}
 <table class="table table-striped">
@@ -31,4 +32,5 @@
 {% else %}
   <p>There are no books borrowed.</p>
 {% endif %}
+</main>
 {% endblock %}

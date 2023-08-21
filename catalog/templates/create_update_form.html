@@ -6,6 +6,7 @@
 {% endblock %}
 
 {% block content %}
+<main>
   <form action="" method="post">
     {% csrf_token %}
     <table>
@@ -13,4 +14,5 @@
     </table>
     <input type="submit" class="button" value="Soumettre">
   </form>
+</main>
 {% endblock %}

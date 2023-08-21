@@ -6,13 +6,15 @@
 {% endblock %}
 
 {% block content %}
-<div class="row">
+<main class="row">
   <section class="col">
-    <h1>Auteur</h1>
-    <h5><strong>Nom :</strong> {{ author.last_name|upper }}</h5>
-    <h5><strong>Prénom :</strong> {{ author.first_name }}</h5>
-    <h5><strong>Date de naissance :</strong> {{ author.date_of_birth }}</h5>
-    <h5><strong>Mort :</strong> {{ author.date_of_death }}</h5>
+    <div id="detail-card">
+      <h1>Auteur</h1>
+      <h5><strong>Nom :</strong> {{ author.last_name|upper }}</h5>
+      <h5><strong>Prénom :</strong> {{ author.first_name }}</h5>
+      <h5><strong>Date de naissance :</strong> {{ author.date_of_birth }}</h5>
+      <h5><strong>Mort :</strong> {{ author.date_of_death }}</h5>
+    </div>
   </section>
   <section class="col">
     <h3>Ses derniers livres :</h3>
@@ -46,5 +48,5 @@
   <p style="text-align: center; margin-top: 5%;">Cet auteur n'a pas encore rédigé de livres.</p>  
   {% endif %}
   </section>
-</div>
+</main>
 {% endblock %}

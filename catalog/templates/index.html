@@ -6,14 +6,15 @@
 {% endblock %}
 
 {% block content %}
+<main>
   <h1>Accueil de la bibliothèque locale</h1>
   <p>Bienvenue à la bibliothèque locale, un site web basé sur le travail de <em>Mozilla Developer Network</em>!</p>
-  <div class="search-container">
+  <div id="search-container">
     <form class="search-bar form-inline d-flex">
       {% csrf_token %}
       <input class="form-control mr-sm-2" name="search" type="search" placeholder="Rechercher un livre" aria-label="Search">
     </form>
-    <div class="search-results"></div>
+    <div id="search-results"></div>
   </div>
   <h2>Contenu dynamique</h2>
   <p>La bibliothèque dispose des enregistrements suivants:</p>
@@ -25,9 +26,10 @@
   </ul>
 
   <!-- pluralize rajoute un s à la fin si la valeur est différente de 1. -->
-  <p class="counter">
+  <p id="counter">
     You have visited this page {{ num_visits }} time{{ num_visits|pluralize }} {{ user }}.
   </p>
+</main>
 {% endblock %}
 
 {% block js %}
