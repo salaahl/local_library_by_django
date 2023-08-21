@@ -33,7 +33,7 @@ h1, h3 {
   background-color: var(--card-bg);
   border: 5px solid var(--card-border-color);
   border-radius: 5px;
-  filter: drop-shadow(-5px 30px 0px rgb(0, 0, 0, 0.1));
+  filter: drop-shadow(5px 5px 0px rgb(0, 0, 0, 0.1));
 }
 
 #page-container > main.row > .col:last-child {
@@ -44,29 +44,13 @@ h1, h3 {
 }
 
 /* CSS spécifique à la page d'un livre */
-.book-instance {
-  display: flex;
-  justify-content: space-around;
-  align-items: center;
-}
-
-.book-instance > div {
-  width: 50%;
-}
-
-.book-status > div {
+.book-status {
   width: fit-content;
   margin: auto;
-  padding: 2%;
+  padding: 5% 10% 5% 10%;
   border-radius: 50px;
   color: white;
   font-weight: bold;
-}
-
-.book-aside {
-  height: fit-content;
-  padding: 2%;
-  border-radius: 50px;
 }
 
 .login {

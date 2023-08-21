@@ -66,14 +66,16 @@
   body .container-fluid, body .container-fluid > .row {
     height: 100%;
   }
-
-  #navbar-container {
-    padding: 1%;
-  }
   
   .navbar {
+    position: fixed;
+    height: -webkit-fill-available;
     width: fit-content;
-    padding: 0;
+    padding: 1%;
+  }
+
+  .navbar-expand-lg .navbar-collapse {
+    justify-content: space-between;
   }
 
   .button {
@@ -81,7 +83,6 @@
   }
   
   #user-div {
-    position: absolute;
     text-align: center;
   }
 }
@@ -127,7 +128,12 @@ a {
 }
 
 table {
+  text-align-last: center;
   border: 2px solid;
+}
+
+table tr {
+  vertical-align: middle;
 }
 
 .form-control:focus {

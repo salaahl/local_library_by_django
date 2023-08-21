@@ -20,40 +20,50 @@
 <section class="col">
   <h3>Exemplaires :</h3>
   {% if user.is_authenticated %}
-  <!-- "_set"(.all) est une fonction de Django permettant de retrouver la partie "Many" d'une relation (étant donné que la relation OneToMany n'a été déclarée que du côté One donc du côté du model "book"). Ainsi, je vais pouvour retrouver tous les enregistrements "bookinstance" associés à mon objet "book". -->
-  {% for copy in book.bookinstance_set.all %}
-    <div class="separator"></div>
-    <article class="book-instance">
-      <div class="book-status">
-        <div class="{% if copy.status == 'a' %}bg-success{% elif copy.status == 'm' %}bg-danger{% else %}bg-warning{% endif %}">
-          {{ copy.get_status_display }}
-        </div>
-      </div>
-      <div class="book-aside">
-        {% if copy.status == 'a' %}
-        <div class="form">
-          <form action="{{ request.path }}" method="post">
-            {% csrf_token %}
-            <input class="button" type="submit" value="Emprunter" />
-            <input type="hidden" name="borrow_book" value="/" />
-            <input type="hidden" name="copy_id" value="{{ copy.id }}" />
-            <input type="hidden" name="user_id" value="{{ user.id }}" />
-          </form>
-        </div>
-        {% elif copy.status == 'o' and user == copy.borrower %}
-        <a class="button" href="{% url 'book-renew' copy.pk %}?next={% url 'book-detail' book.id %}">Prolonger</a>
-        <a class="button" href="{% url 'book-return' copy.pk %}?next={% url 'book-detail' book.id %}">Retourner</a>
-        {% else %}
-        <p>
-          <strong>Document emprunté par :</strong> {{ copy.borrower }}<br>
-          <strong>Date de retour :</strong> {{ copy.due_back }}
-        </p>
-        {% endif %}
-        <p><strong>Date d'impression :</strong> {{ copy.imprint }}</p>
-        <p style="opacity: 0.5;"><strong>Identifiant :</strong> {{ copy.id }}</p>
-      </div>
-    </article>
-  {% endfor %}
+  <table class="table table-striped">
+    <thead>
+      <tr>
+        <th scope="col">Identifiant</th>
+        <th scope="col">Statut</th>
+        <th scope="col">Date d'impression</th>
+        <th scope="col">Emprunter/Retourner</th>
+      </tr>
+    </thead>
+    <tbody>
+      <!-- "_set"(.all) est une fonction de Django permettant de retrouver la partie "Many" d'une relation 
+        (étant donné que la relation OneToMany n'a été déclarée que du côté One donc du côté du model "book"). 
+        Ainsi, je vais pouvour retrouver tous les enregistrements "bookinstance" associés à mon objet "book". 
+      -->
+      {% for copy in book.bookinstance_set.all %}
+      <tr>
+        <td>{{ copy.id }}</td>
+        <td>
+          <div class="book-status {% if copy.status == 'a' %}bg-success{% elif copy.status == 'm' %}bg-danger{% else %}bg-warning{% endif %}">
+            {{ copy.get_status_display }}
+          </div>
+        </td>
+        <td>{{ copy.imprint }}</td>
+        <td>
+            {% if copy.status == 'a' %}
+              <form action="{{ request.path }}" method="post">
+                {% csrf_token %}
+                <input class="button" type="submit" value="Emprunter" />
+                <input type="hidden" name="borrow_book" value="/" />
+                <input type="hidden" name="copy_id" value="{{ copy.id }}" />
+                <input type="hidden" name="user_id" value="{{ user.id }}" />
+              </form>
+            {% elif copy.status == 'o' and user == copy.borrower %}
+            <a class="button" href="{% url 'book-renew' copy.pk %}?next={% url 'book-detail' book.id %}">Prolonger</a>
+            <a class="button" href="{% url 'book-return' copy.pk %}?next={% url 'book-detail' book.id %}">Retourner</a>
+            {% else %}
+              <strong>Document emprunté par :</strong> {{ copy.borrower }}<br>
+              <strong>Date de retour :</strong> {{ copy.due_back }}
+            {% endif %}
+        </td>
+      </tr>
+      {% endfor %}
+    </tbody>
+  </table>
 {% else %}
   <div class="login">
     <p>Veuillez vous connecter pour accéder au statut du document.</p>
