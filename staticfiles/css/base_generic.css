@@ -1,54 +1,63 @@
 @media (prefers-color-scheme: dark) {
   :root {
+    --h1-color: darkseagreen;
     --font-color: white;
-    --bg-color: rgb(52,58,64);
-    --separator-color: rgb(248,249,250);
-  }
-  
-  html, body {
-    background-color: rgb(52,58,64, 0.7);
+    --navbar-bg-color: rgb(52,58,64);
+    --page-bg-color: rgb(52,58,64, 0.8);
+    --card-bg: rgb(71, 129, 127);
+    --card-border-color: rgb(81, 139, 137);
+    --border-color: rgb(0, 0, 0, 0.1);
   }
 
   .navbar-toggler-icon {
     background-image: url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 30 30'%3e%3cpath stroke='rgba%28255, 255, 255, 0.75%29' stroke-linecap='round' stroke-miterlimit='10' stroke-width='2' d='M4 7h22M4 15h22M4 23h22'/%3e%3c/svg%3e");
   }
   
-  .nav-link, .user-div {
+  .nav-link, #user-div {
     color: rgb(255, 255, 255, 0.5);
   }
 
-  .navbar-brand, .nav-link.active {
+  .nav-link.active {
     color: rgb(255, 255, 255, 1)!important;
   }
 
   .table tbody {
-    background-color: rgb(52,58,64);
+    background-color: var(--navbar-bg-color);
+  }
+
+  .table th {
+    background-color: var(--card-bg);
   }
   
   .table td {
     color: white;
     background-color: transparent;
   }
+
+  #page-container.button {
+    filter: invert(1);
+  }
 }
 
 @media (prefers-color-scheme: light) {
   :root {
-    --bg-color: rgb(248,249,250);
-    --h1-color: rgb(52,58,64);
-    --separator-color: rgb(52,58,64);
-  }
-
-  .user-div {
-    color: rgb(0, 0, 0, 0.5);
+    --font-color: black;
+    --navbar-bg-color: rgb(248,249,250);
+    --page-bg-color: rgb(255, 255, 255);
+    --h1-color: #82A0AA;
+    --card-bg: rgb(198, 198, 198);
+    --card-border-color: rgb(208, 208, 208);
+    --border-color: whitesmoke;
+    
   }
 }
 
 @media (max-width: 991px) {
-  body .container-fluid > .row > div:first-child {
+  #navbar-container {
     height: fit-content;
   }
   
-  body .container-fluid > .row > div:first-child, body .container-fluid > .row > div:last-child {
+  #navbar-container, #page-container {
     width: 100%;
   }
   
@@ -58,40 +67,46 @@
 }
 
 @media (min-width: 992px) {
-  .container-fluid, body .container-fluid > .row {
+  body .container-fluid, body .container-fluid > .row {
     height: 100%;
   }
   
   .navbar {
+    position: fixed;
+    height: -webkit-fill-available;
     width: fit-content;
+    padding: 1%;
+  }
+
+  .navbar-expand-lg .navbar-collapse {
+    justify-content: space-between;
   }
 
   .button {
     min-width: 150px;
   }
   
-  .user-div {
-    position: absolute;
+  #user-div {
     text-align: center;
   }
 }
 
 @media (min-width: 991px) and (max-width: 1024px) {
-  body .container-fluid > .row > div:first-child {
+  #navbar-container {
     width: 25%;
   }
 
-  body .container-fluid > .row > div:last-child {
+  #page-container {
     width: 75%;
   }
 }
 
 @media (min-width: 1025px) {
-  body .container-fluid > .row > div:first-child {
+  #navbar-container {
     width: 20%;
   }
 
-  body .container-fluid > .row > div:last-child {
+  #page-container {
     width: 80%;
   }
 }
@@ -100,56 +115,56 @@ html, body {
   height: 100%;
   font-size: 105%;
   color: var(--font-color);
+  background-color: var(--page-bg-color);
 }
 
-.form-control:focus {
-  box-shadow: none;
-}
-
-body .container-fluid > .row > div:first-child {
-  background-color: var(--bg-color);
-}
-
-body .container-fluid > .row > div:last-child {
-  overflow: hidden;
+h1, h2, h3, h4, h5, h6 {
+  line-height: 1.2;
+  font-weight: 300;
 }
 
 h1 {
- color: var(--h1-color) 
+ color: var(--h1-color);
 }
 
 a {
   color: inherit;
 }
 
-ul > .nav-item > .nav-link {
+table {
+  text-align-last: center;
+  border: 2px solid;
+}
+
+table tr {
+  vertical-align: middle;
+}
+
+.form-control:focus {
+  box-shadow: none;
+}
+
+#navbar-container {
+  background-color: var(--navbar-bg-color);
+  border-right: 2px solid var(--border-color);
+}
+
+#navbar-brand {
+  font-size: 130%;
+  text-decoration: auto;
+}
+
+.navbar ul > .nav-item > .nav-link {
   padding-left: 0!important;
   padding-top: 1rem;
 }
 
-.btn-toggle {
+.navbar .btn-toggle {
   padding-left: 0!important;
 }
-.nav-pagination {
-  position: absolute;
-  bottom: 0;
-}
 
-table {
-  border: 2px solid
-}
-
-h1, h2, h3, h4, h5, h6 {
-  line-height: 1.2;
-}
-
-h2, h3, h4, h5, h6 {
-  padding: 0.5rem 0 0.5rem 0;
-  font-weight: 300;
-}
-
-h1 {
-  font-weight: 400;
+#page-container {
+  overflow: auto;
 }
 
 .button {
@@ -195,22 +210,16 @@ h1 {
   fill: #06f;
 }
 
-.separator {
-  height: 0;
-  width: 80%;
-  margin: 0 10% 0 10%;
-  border: 2px solid;
+#user-div > p {
+  color: rgb(0, 0, 0, 0.5);
 }
 
-.logo {
-  font-weight: bold;
-}
-
-.user-div {
-  bottom: 5%;
-}
-
-.user-div > a {
+#user-div .button {
   background-color: indianred;
   color: white;
+}
+
+aside.nav-pagination {
+  position: absolute;
+  bottom: 0;
 }

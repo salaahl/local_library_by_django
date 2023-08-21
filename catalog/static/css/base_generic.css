@@ -24,10 +24,18 @@
   .table tbody {
     background-color: var(--navbar-bg-color);
   }
+
+  .table th {
+    background-color: var(--card-bg);
+  }
   
   .table td {
     color: white;
     background-color: transparent;
+  }
+
+  #page-container.button {
+    filter: invert(1);
   }
 }
 
@@ -41,10 +49,6 @@
     --card-border-color: rgb(208, 208, 208);
     --border-color: whitesmoke;
     
-  }
-
-  #user-div {
-    color: rgb(0, 0, 0, 0.5);
   }
 }
 
@@ -206,18 +210,11 @@ table tr {
   fill: #06f;
 }
 
-.separator {
-  height: 0;
-  width: 80%;
-  margin: 0 10% 0 10%;
-  border: 2px solid;
+#user-div > p {
+  color: rgb(0, 0, 0, 0.5);
 }
 
-#user-div {
-  bottom: 0;
-}
-
-#user-div > a {
+#user-div .button {
   background-color: indianred;
   color: white;
 }
