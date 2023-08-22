@@ -1,13 +1,13 @@
-body .container-fluid > .row > div:last-child > .search-container ~ * {
+#page-container > #search-container ~ * {
   transition: filter 1s, opacity 1s;
 }
 
-.search-container {
+#search-container {
   position: relative;
   margin-bottom: 1rem;
 }
 
-.search-results {
+#search-results {
   position: absolute;
   width: 100%;
   margin-top: 1%;
@@ -16,7 +16,7 @@ body .container-fluid > .row > div:last-child > .search-container ~ * {
   transition: all 1s;
 }
 
-.search-results > table {
+#search-results > table {
   margin: 0;
 }
 
@@ -24,7 +24,7 @@ body .container-fluid > .row > div:last-child > .search-container ~ * {
   padding: 1%;
 }
 
-.counter {
+#counter {
   position: absolute;
   bottom: 0;
 }
