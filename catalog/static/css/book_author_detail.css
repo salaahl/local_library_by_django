@@ -1,6 +1,11 @@
 @media (max-width: 991px) {
   #page-container > main.row > .col:last-child {
     margin-top: 10%;
+    overflow: auto;
+  }
+
+  #page-container > main.row > .col:last-child > h3 {
+    text-align: center;
   }
 
   .book-aside > .button {
@@ -11,6 +16,13 @@
 @media (min-width: 992px) {
   #page-container > main.row {
     min-height: 100%;
+  }
+
+  #page-container > main.row > .col:last-child {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
   }
 
   .book-aside > .button {
@@ -34,13 +46,6 @@ h1, h3 {
   border: 5px solid var(--card-border-color);
   border-radius: 5px;
   filter: drop-shadow(5px 5px 0px rgb(0, 0, 0, 0.1));
-}
-
-#page-container > main.row > .col:last-child {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
 }
 
 /* CSS spécifique à la page d'un livre */
