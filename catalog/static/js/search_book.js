@@ -13,7 +13,12 @@ document.addEventListener("DOMContentLoaded", () => {
         };
     
         let body = document.querySelectorAll("#page-container > #search-container ~ *");
-        console.log(body)
+        let cont = document.querySelectorAll("#page-container > #search-container ~ *");
+        console.log(cont)
+        let connt = document.querySelectorAll("#search-container ~ *");
+        console.log(connt)
+        let connet = document.querySelectorAll("#search-container");
+        console.log(connet)
     
         timer = setTimeout(function() {
             if ($('[name=search]').value.length > 1) {
