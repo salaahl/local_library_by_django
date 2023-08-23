@@ -142,7 +142,7 @@ a {
   vertical-align: middle;
 }
 
-.table > tr:last-child > td {
+.table tr:last-child td {
   border-bottom-width: 0;
 }
 
