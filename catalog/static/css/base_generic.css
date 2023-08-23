@@ -132,14 +132,18 @@ a {
   color: inherit;
 }
 
-table {
-  margin: 0;
+.table {
+  margin-bottom: 0;
   text-align: center;
   text-align-last: center;
 }
 
-table tr {
+.table tr {
   vertical-align: middle;
+}
+
+.table > tr:last-child > td {
+  border-bottom-width: 0;
 }
 
 div:has(> .table), div:has(> .table) {
