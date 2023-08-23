@@ -1,4 +1,4 @@
-#page-container > #search-container ~ * {
+#search-container ~ * {
   transition: filter 1s, opacity 1s;
 }
 
