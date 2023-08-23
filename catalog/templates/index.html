@@ -8,7 +8,7 @@
 {% block content %}
 <main>
   <h1>Accueil de la bibliothèque locale</h1>
-  <p>Bienvenue à la bibliothèque locale, un site web basé sur le travail de <em>Mozilla Developer Network</em>!</p>
+  <p>Bienvenue sur ma bibliothèque personelle !</p>
   <div id="search-container">
     <form class="search-bar form-inline d-flex">
       {% csrf_token %}
@@ -16,8 +16,7 @@
     </form>
     <div id="search-results"></div>
   </div>
-  <h2>Contenu dynamique</h2>
-  <p>La bibliothèque dispose des enregistrements suivants:</p>
+  <h2>La bibliothèque dispose des enregistrements suivants :</h2>
   <ul>
     <li><strong>Livres:</strong> {{ num_books }}</li>
     <li><strong>Copies:</strong> {{ num_instances }}</li>

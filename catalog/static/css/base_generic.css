@@ -72,6 +72,10 @@
   body .container-fluid, body .container-fluid > .row {
     height: 100%;
   }
+
+  #page-container {
+    padding: 0 5% 0 5%;
+  }
   
   .navbar {
     position: fixed;
