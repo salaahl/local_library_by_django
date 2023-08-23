@@ -1,5 +1,5 @@
 #search-container ~ * {
-  transition: filter 1s, opacity 1s;
+  transition: filter .5s, opacity 1s;
 }
 
 #search-container {
@@ -13,7 +13,7 @@
   margin-top: 1%;
   overflow: hidden;
   opacity: 0;
-  transition: all 1s;
+  transition: all .5s;
 }
 
 #search-results > table {
