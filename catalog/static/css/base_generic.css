@@ -142,7 +142,7 @@ table tr {
   vertical-align: middle;
 }
 
-div:has(> .table) {
+div:has(> .table), div:has(> .table) {
   border: 2px solid;
   border-radius: 5px;
   border-color: var(--bs-border-color);
