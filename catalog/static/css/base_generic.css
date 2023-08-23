@@ -6,7 +6,8 @@
     --page-bg-color: rgb(52,58,64, 0.8);
     --card-bg: rgb(71, 129, 127);
     --card-border-color: rgb(81, 139, 137);
-    --border-color: rgb(0, 0, 0, 0.1);
+    --navbar-border-color: rgb(0, 0, 0, 0.1);
+    --table-border-color: rgb(0, 0, 0, 0.3);
   }
 
   .navbar-toggler-icon {
@@ -47,7 +48,8 @@
     --h1-color: #82A0AA;
     --card-bg: rgb(198, 198, 198);
     --card-border-color: rgb(208, 208, 208);
-    --border-color: whitesmoke;
+    --navbar-border-color: whitesmoke;
+    --table-border-color: rgb(0, 0, 0, 0.1);
     
   }
 }
@@ -125,6 +127,8 @@ h1, h2, h3, h4, h5, h6 {
 }
 
 h1 {
+ font-size: xx-large;
+ text-transform: uppercase;
  color: var(--h1-color);
 }
 
@@ -148,10 +152,10 @@ a {
 
 div:has(> .table), div:has(> .table) {
   width: 100%;
-  overflow: hidden;
+  overflow: auto;
   border: 2px solid;
   border-radius: 10px;
-  border-color: var(--border-color);
+  border-color: var(--table-border-color);
 }
 
 .form-control:focus {
@@ -160,12 +164,16 @@ div:has(> .table), div:has(> .table) {
 
 #navbar-container {
   background-color: var(--navbar-bg-color);
-  border-right: 2px solid var(--border-color);
+  border-right: 2px solid var(--navbar-border-color);
 }
 
 #navbar-brand {
   font-size: 130%;
   text-decoration: auto;
+}
+
+.navbar-toggler:focus {
+  box-shadow: none;
 }
 
 .navbar ul > .nav-item > .nav-link {
