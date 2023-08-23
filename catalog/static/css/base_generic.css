@@ -133,6 +133,7 @@ a {
 }
 
 table {
+  margin: 0;
   text-align: center;
   text-align-last: center;
 }
@@ -142,8 +143,10 @@ table tr {
 }
 
 div:has(> .table), div:has(> .table) {
+  width: 100%;
+  overflow: hidden;
   border: 2px solid;
-  border-radius: 5px;
+  border-radius: 10px;
   border-color: var(--bs-border-color);
 }
 
