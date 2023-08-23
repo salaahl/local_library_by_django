@@ -12,11 +12,12 @@ document
     };
 
     let body = document.querySelectorAll("#page-container > #search-container ~ *");
+    console.log(body)
 
     timer = setTimeout(function() {
         if ($('[name=search]').value.length > 1) {
             body.forEach(content => {
-                content.style.filter = 'blur(5px) opacity(0)'
+                content.style.filter = 'blur(5px) opacity(0)';
             })
 
             $('#search-results').innerHTML = '';
@@ -54,8 +55,8 @@ document
                         result.books.forEach(book => {
                             $('tbody').innerHTML +=
                                 '<tr class="table-row">' +
-                                '<td><a href="/catalog/book/' + book['id'] + '">' + book['title'] +                                   '</a></td>' +
-                                '<td><a href="/catalog/author/' + book['author_id'] + '">' +                                           book['author'] + 
+                                '<td><a href="/catalog/book/' + book['id'] + '">' + book['title'] + '</a></td>' +
+                                '<td><a href="/catalog/author/' + book['author_id'] + '">' + book['author'] + 
                               '</a></td>' + '</tr>';
                         })
                     } else {
@@ -70,7 +71,7 @@ document
                 });
         } else {
             body.forEach(content => {
-                content.style.filter = 'blur(0px) opacity(1)'
+                content.style.filter = 'blur(0px) opacity(1)';
             })
             $('#search-results').innerHTML = '';
         }
