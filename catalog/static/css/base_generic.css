@@ -55,6 +55,10 @@
 }
 
 @media (max-width: 991px) {
+  h1 {
+    font-size: xx-large;
+  }
+  
   #navbar-container {
     height: fit-content;
   }
@@ -69,6 +73,10 @@
 }
 
 @media (min-width: 992px) {
+  h1 {
+    font-size: xxx-large;
+  }
+  
   body .container-fluid, body .container-fluid > .row {
     height: 100%;
   }
@@ -132,7 +140,6 @@ h1, h2, h3, h4, h5, h6 {
 
 h1 {
  margin-bottom: 1rem;
- font-size: xx-large;
  text-transform: uppercase;
  color: var(--h1-color);
 }
