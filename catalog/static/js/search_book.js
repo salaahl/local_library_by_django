@@ -14,7 +14,7 @@ document
     let body = document.querySelectorAll("#search-container ~ *");
         
     timer = setTimeout(function() {
-        if ($('[name=search]').value.length > 1) {
+        if ($('[name=search]').value.length > 0) {
             body.forEach(content => {
                 content.style.filter = 'blur(5px) opacity(0)';
             })
