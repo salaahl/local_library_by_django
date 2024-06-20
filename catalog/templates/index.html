@@ -23,11 +23,6 @@
     <li><strong>Copies disponibles:</strong> {{ num_instances_available }}</li>
     <li><strong>Auteurs:</strong> {{ num_authors }}</li>
   </ul>
-
-  <!-- pluralize rajoute un s à la fin si la valeur est différente de 1. -->
-  <p id="counter">
-    You have visited this page {{ num_visits }} time{{ num_visits|pluralize }} {{ user }}.
-  </p>
 </main>
 {% endblock %}
 
