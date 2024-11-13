@@ -20,6 +20,7 @@
 <section class="col">
   <h3>Exemplaires :</h3>
   {% if user.is_authenticated %}
+  {% if book.bookinstance_set.all %}
   <div>
     <table class="table table-striped">
       <thead>
@@ -64,6 +65,11 @@
       </tbody>
     </table>
   </div>
+{% else %}
+  <div class="login">
+    <p>Aucun exemplaire disponible.</p>
+  </div>
+{% endif %}
 {% else %}
   <div class="login">
     <p>Veuillez vous connecter pour accéder au statut du document.</p>
