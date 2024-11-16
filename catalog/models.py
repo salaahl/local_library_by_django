@@ -71,6 +71,7 @@ class BookInstance(models.Model):
         help_text='Unique ID for this particular book across whole library')
     book = models.ForeignKey('Book', on_delete=models.CASCADE, null=True)
     imprint = models.CharField(max_length=200)
+    pdf_file = models.FileField(upload_to='book_pdfs/', blank=True, null=True)
     due_back = models.DateField(null=True, blank=True)
     borrower = models.ForeignKey(User,
                                  on_delete=models.SET_NULL,
