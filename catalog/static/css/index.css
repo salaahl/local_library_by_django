@@ -1,5 +1,13 @@
+h1, p {
+  text-align: center;
+}
+
+h1 + p {
+  margin-bottom: 4rem;
+}
+
 #search-container ~ * {
-  transition: filter .5s, opacity 1s;
+  transition: filter 0.5s, opacity 1s;
 }
 
 #search-container {
@@ -14,7 +22,7 @@
   margin-top: 1%;
   overflow: hidden;
   opacity: 0;
-  transition: all .5s;
+  transition: all 0.5s;
 }
 
 #search-results > table {

@@ -2,8 +2,8 @@
   :root {
     --h1-color: darkseagreen;
     --font-color: white;
-    --navbar-bg-color: rgb(52,58,64);
-    --page-bg-color: rgb(52,58,64, 0.8);
+    --navbar-bg-color: rgb(52, 58, 64);
+    --page-bg-color: rgb(52, 58, 64, 0.8);
     --card-bg: rgb(71, 129, 127);
     --card-border-color: rgb(81, 139, 137);
     --navbar-border-color: rgb(0, 0, 0, 0.1);
@@ -13,13 +13,14 @@
   .navbar-toggler-icon {
     background-image: url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 30 30'%3e%3cpath stroke='rgba%28255, 255, 255, 0.75%29' stroke-linecap='round' stroke-miterlimit='10' stroke-width='2' d='M4 7h22M4 15h22M4 23h22'/%3e%3c/svg%3e");
   }
-  
-  .nav-link, #user-div {
+
+  .nav-link,
+  #user-div {
     color: rgb(255, 255, 255, 0.5);
   }
 
   .nav-link.active {
-    color: rgb(255, 255, 255, 1)!important;
+    color: rgb(255, 255, 255, 1) !important;
   }
 
   .table tbody {
@@ -29,7 +30,7 @@
   .table th {
     background-color: var(--card-bg);
   }
-  
+
   .table td {
     color: white;
     background-color: transparent;
@@ -43,31 +44,37 @@
 @media (prefers-color-scheme: light) {
   :root {
     --font-color: black;
-    --navbar-bg-color: rgb(248,249,250);
+    --navbar-bg-color: rgb(248, 249, 250);
     --page-bg-color: rgb(255, 255, 255);
-    --h1-color: #82A0AA;
+    --h1-color: #82a0aa;
     --card-bg: rgb(198, 198, 198);
     --card-border-color: rgb(208, 208, 208);
     --navbar-border-color: whitesmoke;
     --table-border-color: rgb(0, 0, 0, 0.1);
-    
   }
 }
 
+h1 {
+  font-size: xx-large;
+}
+
+#page-container > main {
+  max-width: 991px;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+.navbar {
+  width: 100%;
+}
+
 @media (max-width: 991px) {
-  h1 {
-    font-size: xx-large;
-  }
-  
   #navbar-container {
     height: fit-content;
   }
-  
-  #navbar-container, #page-container {
-    width: 100%;
-  }
-  
-  .navbar {
+
+  #navbar-container,
+  #page-container {
     width: 100%;
   }
 }
@@ -76,20 +83,21 @@
   h1 {
     font-size: xxx-large;
   }
-  
-  body .container-fluid, body .container-fluid > .row {
+
+  body .container-fluid,
+  body .container-fluid > .row {
     height: 100%;
   }
 
   #page-container {
     padding: 1% 5% 0 5%;
   }
-  
+
   .navbar {
     position: fixed;
     height: -webkit-fill-available;
     width: fit-content;
-    padding: 1%;
+    padding: 2% 1%;
   }
 
   .navbar-expand-lg .navbar-collapse {
@@ -99,7 +107,7 @@
   .button {
     min-width: 150px;
   }
-  
+
   #user-div {
     text-align: center;
   }
@@ -125,7 +133,8 @@
   }
 }
 
-html, body {
+html,
+body {
   height: 100%;
   overflow: auto;
   font-size: 105%;
@@ -133,15 +142,20 @@ html, body {
   background-color: var(--page-bg-color);
 }
 
-h1, h2, h3, h4, h5, h6 {
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
   line-height: 1.2;
   font-weight: 300;
 }
 
 h1 {
- margin-bottom: 1rem;
- text-transform: uppercase;
- color: var(--h1-color);
+  margin-bottom: 1rem;
+  text-transform: uppercase;
+  color: var(--h1-color);
 }
 
 a {
@@ -162,7 +176,8 @@ a {
   border-bottom-width: 0;
 }
 
-div:has(> .table), div:has(> .table) {
+div:has(> .table),
+div:has(> .table) {
   width: 100%;
   overflow: auto;
   border: 2px solid;
@@ -189,12 +204,12 @@ div:has(> .table), div:has(> .table) {
 }
 
 .navbar ul > .nav-item > .nav-link {
-  padding-left: 0!important;
+  padding-left: 0 !important;
   padding-top: 1rem;
 }
 
 .navbar .btn-toggle {
-  padding-left: 0!important;
+  padding-left: 0 !important;
 }
 
 #page-container {
@@ -210,19 +225,19 @@ div:has(> .table), div:has(> .table) {
   cursor: pointer;
   display: inline-flex;
   fill: #000;
-  font-family: Inter,sans-serif;
+  font-family: Inter, sans-serif;
   font-size: 16px;
   font-weight: 600;
   height: 45px;
   justify-content: center;
-  letter-spacing: -.8px;
+  letter-spacing: -0.8px;
   line-height: 24px;
   min-width: 140px;
   outline: 0;
   padding: 0 17px;
   text-align: center;
   text-decoration: none;
-  transition: all .3s;
+  transition: all 0.3s;
   user-select: none;
   -webkit-user-select: none;
   touch-action: manipulation;

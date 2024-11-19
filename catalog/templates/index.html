@@ -7,8 +7,8 @@
 
 {% block content %}
 <main>
-  <h1>Accueil de la bibliothèque locale</h1>
-  <p>Bienvenue sur ma bibliothèque personelle !</p>
+  <h1>Éditions Libérées</h1>
+  <p>Accédez aux classiques du domaine public !</p>
   <div id="search-container">
     <form class="search-bar form-inline d-flex">
       {% csrf_token %}
@@ -19,8 +19,8 @@
   <h2>La bibliothèque dispose des enregistrements suivants :</h2>
   <ul>
     <li><strong>Livres:</strong> {{ num_books }}</li>
-    <li><strong>Copies:</strong> {{ num_instances }}</li>
-    <li><strong>Copies disponibles:</strong> {{ num_instances_available }}</li>
+    <li><strong>Exemplaires :</strong> {{ num_instances }}</li>
+    <li><strong>Exemplaires disponibles:</strong> {{ num_instances_available }}</li>
     <li><strong>Auteurs:</strong> {{ num_authors }}</li>
   </ul>
 </main>
