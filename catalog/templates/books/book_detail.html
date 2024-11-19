@@ -26,7 +26,7 @@
       <thead>
         <tr>
           <th scope="col">Statut</th>
-          <th scope="col">Date d'impression</th>
+          <th scope="col col-optional">Date d'impression</th>
           <th scope="col">Emprunter/Retourner</th>
         </tr>
       </thead>
@@ -42,7 +42,7 @@
               {{ copy.get_status_display }}
             </div>
           </td>
-          <td>{{ copy.imprint }}</td>
+          <td class="col-optional">{{ copy.imprint }}</td>
           <td>
               {% if copy.status == 'a' %}
                 <form action="{{ request.path }}" method="post">

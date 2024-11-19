@@ -220,7 +220,7 @@ div:has(> .table) {
 
 #navbar-brand {
   font-size: 130%;
-  text-decoration: auto;
+  text-decoration: unset;
 }
 
 .navbar-toggler:focus {
@@ -234,6 +234,10 @@ div:has(> .table) {
 
 .navbar .btn-toggle {
   padding-left: 0 !important;
+}
+
+.navbar-toggler {
+  border: 0;
 }
 
 #page-container {
@@ -284,11 +288,30 @@ div:has(> .table) {
 }
 
 #user-div .button {
-  background-color: indianred;
+  width: 100%;
+  margin-top: 1rem;
   color: white;
+  background-color: indianred;
 }
 
 aside.nav-pagination {
   position: absolute;
   bottom: 0;
+}
+
+table .col-optional {
+  display: none;
+}
+
+@media (min-screen: 768px) {
+  table .col-optional {
+    display: table-cell;
+  }
+}
+
+@media (min-width: 992px) {
+  #user-div .button {
+    width: auto;
+    margin-top: 0;
+  }
 }
