@@ -346,7 +346,7 @@ def renew_book(request, pk):
 
         # Vérifier que le formulaire est valide :
         if book_instance.due_back_extension > 1:
-            messages.error('Nombre maximal de prolongations atteint.')
+            messages.error(request, 'Nombre maximal de prolongations atteint.')
         elif form.is_valid():
             # Traiter les données dans form.cleaned_data tel que requis (ici on les écrit dans le champ de modèle due_back) :
             book_instance.due_back = form.cleaned_data['renewal_date']
