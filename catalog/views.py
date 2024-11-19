@@ -344,11 +344,12 @@ def renew_book(request, pk):
         form = RenewBookForm(request.POST)
 
         # Vérifier que le formulaire est valide :
-        if book_instance.due_back_extension > 2:
+        if book_instance.due_back_extension > 1:
             messages.error('Nombre maximal de prolongations atteint.')
         elif form.is_valid():
             # Traiter les données dans form.cleaned_data tel que requis (ici on les écrit dans le champ de modèle due_back) :
             book_instance.due_back = form.cleaned_data['renewal_date']
+            book_instance.due_back_extension = book_instance.due_back_extension + 1
             book_instance.save()
 
         # Rediriger vers une nouvelle URL :
