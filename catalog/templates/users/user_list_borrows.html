@@ -14,6 +14,7 @@
         <th scope="col">Titre</th>
         <th scope="col">Auteur</th>
         <th scope="col">Date de retour</th>
+        <th scope="col">Lire</th>
         <th scope="col">Prolonger</th>
         <th scope="col">Retourner</th>
       </tr>
@@ -24,6 +25,7 @@
         <td><a href="{{ borrow.book.get_absolute_url }}">{{ borrow.book.title }}</a></td>
         <td><a href="{% url 'author-detail' borrow.book.author.id %}">{{ borrow.book.author }}</a></td>
         <td>{{ borrow.due_back }}</td>
+        <td><a href="{% url 'book_instance-read' borrow.id %}">Lien</a></td>
         <td><a href="{% url 'book-renew' borrow.pk %}?next={% url 'book-detail' borrow.book.id %}">Prolonger</a></td>
         <td><a href="{% url 'book-return' borrow.pk %}?next={% url 'book-detail' borrow.book.id %}">Retourner</a></td>
       </tr>

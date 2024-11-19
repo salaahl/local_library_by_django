@@ -234,9 +234,19 @@ class LoanedBooksByUserListView(LoginRequiredMixin, generic.ListView):
     template_name = 'users/user_list_borrows.html'
     paginate_by = 10
 
+    # Redéfinit la méthode get_queryset pour n'afficher que les livres empruntés par l'utilisateur connecté et dont la date de retour n'est pas dépassée.
     def get_queryset(self):
-        return (BookInstance.objects.filter(borrower=self.request.user).filter(
-            status__exact='o').order_by('due_back'))
+        books = BookInstance.objects.filter(borrower=self.request.user).filter(
+            status__exact='o').order_by('due_back')
+        
+        for book in books:
+            if book.due_back < datetime.date.today():
+                book.borrower = None
+                book.status = 'a'
+                book.due_back = None
+                book.save()
+
+        return books
 
 
 # UPDATE
@@ -253,6 +263,29 @@ class BookUpdate(PermissionRequiredMixin, UpdateView):
     fields = ['title', 'summary']
     template_name = 'create_update_form.html'
 
+
+class BookInstanceRead(LoginRequiredMixin,generic.DetailView):
+    login_url = '/accounts/login/'
+    model = BookInstance
+    context_object_name = 'book_instance'
+    template_name = 'books_instances/book_instance_read.html'
+    fields = ['title', 'pdf_file']
+    
+@login_required(login_url='/accounts/login/')
+def bookmark(request, pk):
+    data = json.loads(request.body)
+
+    if not data.get('current_page') or pk is None:
+        return JsonResponse({'error': 'Il manque des données obligatoires.'}, status=400)
+
+    try:
+        book_instance = get_object_or_404(BookInstance, pk=pk)
+        book_instance.bookmark = data.get('current_page')
+        book_instance.save()
+
+        return JsonResponse({'status': 'success'})
+    except (ValueError, TypeError):
+        return JsonResponse({'error': 'Erreur lors de la sauvegarde de la page dans la base de données.'}, status=400)
 
 class BookInstanceUpdate(PermissionRequiredMixin, UpdateView):
     permission_required = 'catalog.can_change_book_instance'
@@ -287,6 +320,7 @@ def return_book(request, pk):
 
     if request.method == 'POST':
         book_instance.borrower = None
+        book_instance.bookmark = 1
         book_instance.status = 'a'
         book_instance.due_back = None
         book_instance.save()

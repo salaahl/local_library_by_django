@@ -166,7 +166,7 @@ EMAIL_HOST_PASSWORD = SENDGRID_API_KEY
 EMAIL_PORT = 587
 EMAIL_USE_TLS = True
 
-# dj-database-url est utilisé pour extraire la configuration de la base de données Django à partir d'une variable d'environnement. Django utilisera désormais la configuration de la base de données dans DATABASE_URLsi la variable d'environnement est définie ; sinon, il utilise la base de données SQLite par défaut. Ajouté à l'aide de la commande "pip3 install dj-database-url"
+# dj-database-url est utilisé pour extraire la configuration de la base de données Django à partir d'une variable d'environnement. Django utilisera désormais la configuration de la base de données dans DATABASE_URL si la variable d'environnement est définie ; sinon, il utilise la base de données SQLite par défaut. Ajouté à l'aide de la commande "pip3 install dj-database-url"
 db_from_env = dj_database_url.config(conn_max_age=500)
 DATABASES['default'].update(db_from_env)
 

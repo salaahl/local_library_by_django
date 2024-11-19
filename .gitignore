@@ -1,10 +1,6 @@
 #node_modules
 node_modules/
 
-# Replit #
-.replit
-replit.nix
-
 # Django #
 *.log
 *.pot
@@ -142,3 +138,6 @@ GitHub.sublime-settings
 !.vscode/launch.json 
 !.vscode/extensions.json 
 .history
+
+# Other
+.DS_Store

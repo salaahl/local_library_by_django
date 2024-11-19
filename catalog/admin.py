@@ -38,7 +38,7 @@ class BookInstanceAdmin(admin.ModelAdmin):
   # Gère l'affichage à l'image de "fields" dans la classe AuthorAdmin. Par sections cette fois-ci. "Availability" (ou le "None" en début, veut dire que la section n'aura pas d'en-tête) représente l'en-tête de la section et "fields" déclare les champs à afficher.
     fieldsets = (
       (None, {
-          'fields': ('book', 'imprint', 'id')
+          'fields': ('book', 'imprint', 'pdf_file', 'bookmark', 'id')
       }),
       ('Availability', {
           'fields': ('status', 'due_back','borrower')
