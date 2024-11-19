@@ -41,15 +41,14 @@ document
                     if (result.books != '') {
                         $('#search-results').innerHTML =
                             `<table class="table table-striped">
-                            <thead>
-                              <tr class="table-row">
-                                <th scope="col">Titre</th>
-                                <th scope="col">Auteur</th>
-                              </tr>
-                            </thead>
-                            <tbody class="table-body">
-                            </tbody>
-                          </table>`
+                                <thead>
+                                    <tr class="table-row">
+                                        <th scope="col">Titre</th>
+                                        <th scope="col">Auteur</th>
+                                    </tr>
+                                </thead>
+                                <tbody class="table-body"></tbody>
+                            </table>`
 
                         result.books.forEach(book => {
                             $('tbody').innerHTML +=

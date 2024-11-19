@@ -62,6 +62,15 @@
           </nav>
         </div>
         <div id="page-container">
+          {% if messages %}
+          <aside>
+          {% for message in messages %}
+            <div class="alert {% if message.tags %}alert-{{ message.tags }}{% endif %}">
+              {{ message }}
+            </div>
+          {% endfor %}
+          </aside>
+          {% endif %}
           {% block content %}
           {% endblock %}
           {% if is_paginated %}

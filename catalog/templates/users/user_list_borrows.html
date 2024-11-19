@@ -12,7 +12,7 @@
     <thead>
       <tr>
         <th scope="col">Titre</th>
-        <th scope="col">Auteur</th>
+        <th scope="col" class="col-optional">Auteur</th>
         <th scope="col">Date de retour</th>
         <th scope="col">Lire</th>
         <th scope="col">Prolonger</th>
@@ -23,7 +23,7 @@
       {% for borrow in borrows_list %}
       <tr>
         <td><a href="{{ borrow.book.get_absolute_url }}">{{ borrow.book.title }}</a></td>
-        <td><a href="{% url 'author-detail' borrow.book.author.id %}">{{ borrow.book.author }}</a></td>
+        <td class="col-optional"><a href="{% url 'author-detail' borrow.book.author.id %}">{{ borrow.book.author }}</a></td>
         <td>{{ borrow.due_back }}</td>
         <td><a href="{% url 'book_instance-read' borrow.id %}">Lien</a></td>
         <td><a href="{% url 'book-renew' borrow.pk %}?next={% url 'book-detail' borrow.book.id %}">Prolonger</a></td>

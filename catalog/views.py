@@ -244,6 +244,7 @@ class LoanedBooksByUserListView(LoginRequiredMixin, generic.ListView):
                 book.borrower = None
                 book.status = 'a'
                 book.due_back = None
+                book.due_back_extension = 0
                 book.save()
 
         return books
@@ -343,13 +344,15 @@ def renew_book(request, pk):
         form = RenewBookForm(request.POST)
 
         # Vérifier que le formulaire est valide :
-        if form.is_valid():
+        if book_instance.due_back_extension > 2:
+            messages.error('Nombre maximal de prolongations atteint.')
+        elif form.is_valid():
             # Traiter les données dans form.cleaned_data tel que requis (ici on les écrit dans le champ de modèle due_back) :
             book_instance.due_back = form.cleaned_data['renewal_date']
             book_instance.save()
 
-            # Rediriger vers une nouvelle URL :
-            return HttpResponseRedirect(reverse('all-borrowed'))
+        # Rediriger vers une nouvelle URL :
+        return HttpResponseRedirect(reverse('all-borrowed'))
 
     proposed_renewal_date = datetime.date.today() + datetime.timedelta(weeks=3)
     form = RenewBookForm(initial={'renewal_date': proposed_renewal_date})

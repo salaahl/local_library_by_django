@@ -77,6 +77,7 @@ class BookInstance(models.Model):
                                  null=True,
                                  blank=True)
     due_back = models.DateField(null=True, blank=True)
+    due_back_extension = models.IntegerField(default=0)
     bookmark = models.IntegerField(default=1)
 
 

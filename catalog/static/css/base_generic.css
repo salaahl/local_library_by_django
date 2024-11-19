@@ -303,6 +303,15 @@ table .col-optional {
   display: none;
 }
 
+.alert {
+  min-height: 5%;
+  width: 100%;
+  padding: 20px;
+  text-align: justify;
+  word-wrap: break-word;
+  color: #fff;
+}
+
 @media (min-screen: 768px) {
   table .col-optional {
     display: table-cell;
