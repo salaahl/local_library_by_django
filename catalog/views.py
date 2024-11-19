@@ -352,7 +352,7 @@ def renew_book(request, pk):
             book_instance.save()
 
         # Rediriger vers une nouvelle URL :
-        return HttpResponseRedirect(reverse('all-borrowed'))
+        return HttpResponseRedirect(reverse('my-borrowed'))
 
     proposed_renewal_date = datetime.date.today() + datetime.timedelta(weeks=3)
     form = RenewBookForm(initial={'renewal_date': proposed_renewal_date})
