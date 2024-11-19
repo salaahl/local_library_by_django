@@ -30,7 +30,8 @@
   }
 }
 
-h1, h3 {
+h1,
+h3 {
   text-transform: uppercase;
 }
 
@@ -52,7 +53,7 @@ h1, h3 {
 .book-status {
   width: fit-content;
   margin: auto;
-  padding: 5px;
+  padding: 5px 10px;
   white-space: nowrap;
   border-radius: 50px;
   color: white;

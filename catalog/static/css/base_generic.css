@@ -23,6 +23,10 @@
     color: rgb(255, 255, 255, 1) !important;
   }
 
+  #user-div > p {
+    color: rgb(255, 255, 255, 0.5);
+  }
+
   .table tbody {
     background-color: var(--navbar-bg-color);
   }
@@ -52,6 +56,10 @@
     --navbar-border-color: whitesmoke;
     --table-border-color: rgb(0, 0, 0, 0.1);
   }
+
+  #user-div > p {
+    color: rgb(0, 0, 0, 0.5);
+  }
 }
 
 h1 {
@@ -60,17 +68,24 @@ h1 {
 
 #page-container > main {
   max-width: 991px;
+  margin-top: 10%;
   margin-left: auto;
   margin-right: auto;
 }
 
 .navbar {
   width: 100%;
+  padding-top: 20px;
+  padding-bottom: 20px;
+}
+
+.navbar-collapse {
+  margin-top: 20px;
 }
 
 @media (max-width: 991px) {
   #navbar-container {
-    height: fit-content;
+    min-height: 80px;
   }
 
   #navbar-container,
@@ -104,12 +119,21 @@ h1 {
     justify-content: space-between;
   }
 
-  .button {
-    min-width: 150px;
+  #navbar-brand {
+    width: 100%;
+    margin-bottom: 1.5rem;
   }
 
   #user-div {
     text-align: center;
+  }
+
+  #page-container > main {
+    margin-top: 0;
+  }
+
+  .button {
+    min-width: 150px;
   }
 }
 
@@ -257,10 +281,6 @@ div:has(> .table) {
   border-color: #06f;
   color: #06f;
   fill: #06f;
-}
-
-#user-div > p {
-  color: rgb(0, 0, 0, 0.5);
 }
 
 #user-div .button {

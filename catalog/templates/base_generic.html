@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html lang="fr">
   <head>
-    <title>{% block title %}Éditions libérées{% endblock %}</title>
+    <title>{% block title %}LibriLégaux{% endblock %}</title>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <meta name="csrf-token" content="{{ csrf_token }}" />
@@ -18,7 +18,7 @@
         <div id="navbar-container" class="d-flex justify-content-lg-center justify-content-between">
           <nav class="navbar navbar-expand-lg align-items-start">
             <div class="container-fluid p-0 flex-lg-column h-100">
-              <a id="navbar-brand" class="m-0" href="/">Éditions libérées</a>
+              <a id="navbar-brand" href="/">LibriLégaux</a>
               <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
               <span class="navbar-toggler-icon"></span>
               </button>
@@ -32,7 +32,7 @@
                   {% endif %}
                   {% if perms.catalog.can_add_author %}
                   <li class="border-top my-3"></li>
-                  <li class="mb-1">
+                  <li class="mb-4">
                     <button class="btn btn-toggle nav-link align-items-center rounded collapsed" data-bs-toggle="collapse" data-bs-target="#create-collapse" aria-expanded="false">
                     Créer
                     </button>

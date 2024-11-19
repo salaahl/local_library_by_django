@@ -9,9 +9,7 @@
 <main class="row">
   <section class="col">
     <div id="detail-card">
-      <h1>Auteur</h1>
-      <h5><strong>Nom :</strong> {{ author.last_name|upper }}</h5>
-      <h5><strong>Prénom :</strong> {{ author.first_name }}</h5>
+      <h1>{{ author.last_name|capfirst }}, {{ author.first_name|capfirst }}</h1>
       <h5><strong>Date de naissance :</strong> {{ author.date_of_birth }}</h5>
       <h5><strong>Mort :</strong> {{ author.date_of_death }}</h5>
     </div>
