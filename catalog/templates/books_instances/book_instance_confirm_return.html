@@ -2,13 +2,12 @@
 
 {% block content %}
 <main>
-<h1>Return book instance</h1>
+  <h1>Retourner un document</h1>
+  <p>Vouslez-vous vraiment retourner le document suivant : {{ book_instance }} ?</p>
 
-<p>Are you sure you want to return this book instance: {{ book_instance }} ?</p>
-
-<form action="" method="POST">
-  {% csrf_token %}
-  <input type="submit" value="Yes, delete.">
-</form>
+  <form action="" method="POST">
+    {% csrf_token %}
+    <input type="submit" value="Yes, delete.">
+  </form>
 </main>
 {% endblock %}

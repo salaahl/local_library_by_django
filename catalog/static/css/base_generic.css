@@ -83,6 +83,10 @@ h1 {
   margin-top: 20px;
 }
 
+.helptext {
+  font-size: smaller;
+}
+
 @media (max-width: 991px) {
   #navbar-container {
     min-height: 80px;
@@ -177,7 +181,7 @@ h6 {
 }
 
 h1 {
-  margin-bottom: 1rem;
+  margin-bottom: 2rem;
   text-transform: uppercase;
   color: var(--h1-color);
 }
@@ -304,12 +308,7 @@ table .col-optional {
 }
 
 .alert {
-  min-height: 5%;
-  width: 100%;
-  padding: 20px;
-  text-align: justify;
-  word-wrap: break-word;
-  color: #fff;
+  background-color: indianred;
 }
 
 @media (min-screen: 768px) {

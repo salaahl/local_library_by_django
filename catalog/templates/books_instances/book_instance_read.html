@@ -3,242 +3,39 @@
 {% block title %}{{ book_instance.book.title }}{% endblock %} 
 
 {% block css %}
-<style>
-  button {
-    all: unset;
-    cursor: pointer;
-  }
-
-  #pages {
-    margin: 2.5vh auto;
-    text-align: center;
-  }
-
-  #page_num {
-    width: 45px;
-    padding: 0 5px;
-    border: 2px solid;
-    border-radius: 15px;
-  }
-
-  #canvas-container {
-    position: relative;
-  }
-
-  #prev, #next {
-    cursor: pointer;
-    position: absolute;
-    top: 0;
-    height: 100%;
-    width: auto;
-    padding: 0 16px;
-    color: #000;
-    background-color: #fff6;
-    font-weight: 700;
-    font-size: 20px;
-    -moz-user-select: none;
-    user-select: none;
-    -webkit-user-select: none;
-    z-index: 2;
-    transition: background-color .5s;
-  }
-
-  #next {
-    right: 0;
-  }
-
-  #prev:hover, #next:hover {
-    background-color: rgb(0, 0, 0, 0.25);
-  }
-
-  #the-canvas {
-    display: block;
-    height: auto;
-    width: 100%;
-    margin-left: auto;
-    margin-right: auto;
-  }
-
-  @media (min-width: 992px) {
-    #page-controls {
-      display: flex;
-      width: 50%;
-      margin: 2.5vh auto;
-    }
-
-    #next, #prev {
-      top: 50%;
-      height: fit-content;
-      margin-top: -50px;
-      padding: 16px;
-      border-radius: 99px;
-    }
-    
-    #the-canvas {
-      height: 85vh;
-      width: fit-content;
-    }
-  }
-</style>
-{% endblock %}
+{% load static %}
+<link rel="stylesheet" href="{% static 'css/book_instance_read.css' %}">
+{% endblock %} 
 
 {% block content %}
 <main>
   <div id="pages">
-    Page: <input id="page_num"></input> / <span id="page_count"></span>
+    <input id="page_num" /> sur <span id="page_count"></span>
   </div>
-  <div id="canvas-container">
-    <button id="prev">❮</button>
-    <button id="next">❯</button>
-    <canvas id="the-canvas"></canvas>
+  <div id="wrapper">
+    <div id="container">
+      <section class="open-book">
+        <header>
+          <h1>{{ book_instance.book.title }}</h1>
+          <h6>{{ book_instance.book.author }}</h6>
+        </header>
+        <article id="canvas-container">
+          <button id="prev">❮</button>
+          <button id="next">❯</button>
+          <canvas id="canvas1"></canvas>
+          <canvas id="canvas2"></canvas>
+          <input type="hidden" id="pdf-url" value="{{ book_instance.pdf_file.url }}" />
+          <input type="hidden" id="bookmark" value="{{ book_instance.bookmark }}" />
+          <input type="hidden" id="bookmark-url" value="{% url 'book_instance-bookmark' book_instance.id %}" />
+        </article>
+        <footer></footer>
+      </section>
+    </div>
   </div>
 </main>
 {% endblock %} 
 
 {% block js %}
-<script
-  src="https://cdnjs.cloudflare.com/ajax/libs/pdf.js/4.8.69/pdf.mjs"
-  type="module"
-></script>
-
-<script type="module">
-  // If absolute URL from the remote server is provided, configure the CORS
-  // header on that server.
-  var url = "{{ book_instance.pdf_file.url }}";
-
-  // Loaded via <script> tag, create shortcut to access PDF.js exports.
-  var { pdfjsLib } = globalThis;
-
-  // The workerSrc property shall be specified.
-  pdfjsLib.GlobalWorkerOptions.workerSrc =
-    "https://cdnjs.cloudflare.com/ajax/libs/pdf.js/4.8.69/pdf.worker.mjs";
-
-  var pdfDoc = null,
-    pageNum = parseFloat('{{ book_instance.bookmark }}'),
-    pageRendering = false,
-    pageNumPending = null,
-    scale = 1.5,
-    canvas = document.getElementById("the-canvas"),
-    ctx = canvas.getContext("2d");
-
-  /**
-   * Get page info from document, resize canvas accordingly, and render page.
-   * @param num Page number.
-   */
-  function renderPage(num) {
-    pageRendering = true;
-    // Using promise to fetch the page
-    pdfDoc.getPage(num).then(function (page) {
-      var viewport = page.getViewport({ scale: scale });
-      canvas.height = viewport.height;
-      canvas.width = viewport.width;
-
-      // Render PDF page into canvas context
-      var renderContext = {
-        canvasContext: ctx,
-        viewport: viewport,
-      };
-      var renderTask = page.render(renderContext);
-
-      // Wait for rendering to finish
-      renderTask.promise.then(function () {
-        pageRendering = false;
-        if (pageNumPending !== null) {
-          // New page rendering is pending
-          renderPage(pageNumPending);
-          pageNumPending = null;
-        }
-      });
-    });
-
-    // Update page counters
-    document.getElementById("page_num").value = num;
-  }
-
-  /**
-   * If another page rendering in progress, waits until the rendering is
-   * finised. Otherwise, executes rendering immediately.
-   */
-  function queueRenderPage(num) {
-    if (pageRendering) {
-      pageNumPending = num;
-    } else {
-      renderPage(num);
-    }
-  }
-
-  /**
-   * Displays previous page.
-   */
-  function onPrevPage() {
-    if (pageNum <= 1) {
-      return;
-    }
-    pageNum--;
-    queueRenderPage(pageNum);
-  }
-  document.getElementById("prev").addEventListener("click", onPrevPage);
-
-  /**
-   * Displays next page.
-   */
-  function onNextPage() {
-    if (pageNum >= pdfDoc.numPages) {
-      return;
-    }
-    pageNum++;
-    queueRenderPage(pageNum);
-  }
-  document.getElementById("next").addEventListener("click", onNextPage);
-
-  /**
-   * Displays selected page.
-   */
-  function onSelectedPage() {
-    if (this.value > pdfDoc.numPages) {
-      return;
-    }
-    pageNum = parseFloat(this.value);
-    queueRenderPage(pageNum);
-  }
-  document.getElementById("page_num").addEventListener("change", onSelectedPage);
-
-  /**
-   * Asynchronously downloads PDF.
-   */
-  pdfjsLib.getDocument(url).promise.then(function (pdfDoc_) {
-    pdfDoc = pdfDoc_;
-    document.getElementById("page_count").textContent = pdfDoc.numPages;
-
-    // Initial/first page rendering
-    renderPage(pageNum);
-  });
-
-  // Sauvegarde de la page actuelle dans la base de données
-  window.addEventListener('beforeunload', function () {
-    console.log('Saving current page...')
-    let csrfTokenValue = document.querySelector('meta[name="csrf-token"]').getAttribute('content');
-
-    const request = new Request("{% url 'book_instance-bookmark' book_instance.id %}", {
-      method: 'POST',
-      body: JSON.stringify({
-        'current_page': pageNum
-      }),
-      headers: {
-        'X-CSRFToken': csrfTokenValue
-      }
-    })
-    fetch(request)
-      .then(response => response.json())
-      .then(data => {
-        console.log(data)
-      })
-      .catch((error) => {
-        console.log(error)
-        alert(
-          'La page actuelle n\'a pas pu être sauvegardée. Veuillez noter la page de votre livre pour ne pas perdre votre progression.'
-        )
-      })
-  })
-</script>
+{% load static %}
+<script type="module" src="{% static 'js/book_instance_read.js' %}"></script>
 {% endblock %}

@@ -99,18 +99,31 @@ class BookInstanceModelForm(ModelForm):
 
 
 class RenewBookForm(forms.Form):
-  renewal_date = forms.DateField(help_text="Enter a date between now and 4 weeks (default 3).")
+    # Champ de date avec une valeur initiale
+    renewal_date = forms.DateField(
+        label=_("Renouveler jusqu'au "),
+        initial=datetime.date.today() + datetime.timedelta(weeks=3),
+        help_text=_("Ajoutez entre un et 28 jours (trois semaines par défaut)."),
+        widget=forms.DateInput(
+            attrs={
+                'type': 'date',
+                'min': (datetime.date.today() + datetime.timedelta(days=1)).isoformat(),
+                'max': (datetime.date.today() + datetime.timedelta(weeks=4)).isoformat(),
+            }
+        )
+    )
 
-  def clean_renewal_date(self):
-    data = self.cleaned_data['renewal_date']
+    # Méthode de validation personnalisée
+    def clean_renewal_date(self):
+        data = self.cleaned_data['renewal_date']
 
-    # Vérifier que la date ne se situe pas dans le passé.
-    if data < datetime.date.today():
-      raise ValidationError(_('Invalid date - renewal in past'))
+        # Vérifier que la date ne se situe pas dans le passé
+        if data <= datetime.date.today():
+            raise ValidationError(_('Erreur. Ajoutez au minimum un jour.'))
 
-      # Vérifier que la date tombe dans le bon intervalle (entre maintenant et dans 4 semaines).
-    if data > datetime.date.today() + datetime.timedelta(weeks=4):
-      raise ValidationError(_('Invalid date - renewal more than 4 weeks ahead'))
+        # Vérifier que la date est dans un intervalle de 4 semaines maximum
+        if data > datetime.date.today() + datetime.timedelta(weeks=4):
+            raise ValidationError(_('Erreur. Le renouvellement ne doit pas dépasser quatre semaines.'))
 
-    # N'oubliez pas de toujours renvoyer les données nettoyées.
-    return data
+        # Toujours renvoyer les données nettoyées
+        return data

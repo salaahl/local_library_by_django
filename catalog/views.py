@@ -273,6 +273,7 @@ class BookInstanceRead(LoginRequiredMixin,generic.DetailView):
     template_name = 'books_instances/book_instance_read.html'
     fields = ['title', 'pdf_file']
     
+
 @login_required(login_url='/accounts/login/')
 def bookmark(request, pk):
     data = json.loads(request.body)
@@ -288,6 +289,7 @@ def bookmark(request, pk):
         return JsonResponse({'status': 'success'})
     except (ValueError, TypeError):
         return JsonResponse({'error': 'Erreur lors de la sauvegarde de la page dans la base de données.'}, status=400)
+
 
 class BookInstanceUpdate(PermissionRequiredMixin, UpdateView):
     permission_required = 'catalog.can_change_book_instance'
@@ -356,11 +358,8 @@ def renew_book(request, pk):
         # Rediriger vers une nouvelle URL :
         return HttpResponseRedirect(reverse('my-borrowed'))
 
-    proposed_renewal_date = datetime.date.today() + datetime.timedelta(weeks=3)
-    form = RenewBookForm(initial={'renewal_date': proposed_renewal_date})
-
     context = {
-        'form': form,
+        'form': RenewBookForm(),
         'book_instance': book_instance,
     }
 

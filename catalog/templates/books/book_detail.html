@@ -57,7 +57,7 @@
               <a class="button" href="{% url 'book-return' copy.pk %}?next={% url 'book-detail' book.id %}">Retourner</a>
               {% else %}
                 <strong>Document emprunté par :</strong> {{ copy.borrower }}<br>
-                <strong>Date de retour :</strong> {{ copy.due_back }}
+                <strong>Date de retour :</strong> {{ copy.due_back|date:"d/m/Y" }}
               {% endif %}
           </td>
         </tr>
