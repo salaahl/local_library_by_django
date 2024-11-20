@@ -10,7 +10,7 @@ window.addEventListener("DOMContentLoaded", (event) => {
     pageNum = parseFloat(document.getElementById("bookmark").value) || 1,
     pageRendering = false,
     pageNumPending = null,
-    scale = 2,
+    scale = 3,
     canvas1 = document.getElementById("canvas1"),
     canvas2 = document.getElementById("canvas2"),
     ctx1 = canvas1.getContext("2d"),
@@ -43,35 +43,45 @@ window.addEventListener("DOMContentLoaded", (event) => {
       canvas.classList.add("fade-out");
     });
 
-    setTimeout(() => {
-      // Render the left page
-      var renderLeft = renderPage(startPage, canvas1, ctx1);
+    document.querySelectorAll(".flip").forEach((flip) => {
+      flip.classList.add("start-animation");
+    });
 
-      // Render the right page if the screen is wide enough
-      var renderRight = Promise.resolve();
-      if (startPage + 1 <= pdfDoc.numPages && window.innerWidth > 1023) {
-        renderRight = renderPage(startPage + 1, canvas2, ctx2);
-      } else {
-        // Clear the second canvas if there is no second page or if the screen is small
-        ctx2.clearRect(0, 0, canvas2.width, canvas2.height);
-      }
+    setTimeout(
+      () => {
+        // Render the left page
+        var renderLeft = renderPage(startPage, canvas1, ctx1);
 
-      // Wait for both renderings to complete
-      Promise.all([renderLeft, renderRight]).then(function () {
-        pageRendering = false;
-        if (pageNumPending !== null) {
-          renderPages(pageNumPending);
-          pageNumPending = null;
+        // Render the right page if the screen is wide enough
+        var renderRight = Promise.resolve();
+        if (startPage + 1 <= pdfDoc.numPages && window.innerWidth > 1023) {
+          renderRight = renderPage(startPage + 1, canvas2, ctx2);
+        } else {
+          // Clear the second canvas if there is no second page or if the screen is small
+          ctx2.clearRect(0, 0, canvas2.width, canvas2.height);
         }
-      });
 
-      document.querySelectorAll("#canvas1, #canvas2").forEach((canvas) => {
-        canvas.classList.remove("fade-out");
-      });
+        // Wait for both renderings to complete
+        Promise.all([renderLeft, renderRight]).then(function () {
+          pageRendering = false;
+          if (pageNumPending !== null) {
+            renderPages(pageNumPending);
+            pageNumPending = null;
+          }
+        });
 
-      // Update the current page number input
-      document.getElementById("page_num").value = startPage;
-    }, 500);
+        document.querySelectorAll("#canvas1, #canvas2").forEach((canvas) => {
+          canvas.classList.remove("fade-out");
+        });
+
+        document.querySelectorAll(".flip").forEach((flip) => {
+          flip.classList.remove("start-animation");
+        });
+        // Update the current page number input
+        document.getElementById("page_num").value = startPage;
+      },
+      window.innerWidth > 1023 ? 1000 : 500
+    );
   }
 
   /**
@@ -92,6 +102,9 @@ window.addEventListener("DOMContentLoaded", (event) => {
     if (pageNum <= 1) {
       return;
     }
+    document.querySelectorAll(".flip").forEach((flip) => {
+      flip.classList.remove("alt");
+    });
     pageNum = Math.max(1, pageNum - (window.innerWidth > 1023 ? 2 : 1)); // Move back by 2 pages if wide
     queueRenderPages(pageNum);
   }
@@ -104,6 +117,9 @@ window.addEventListener("DOMContentLoaded", (event) => {
     if (pageNum >= pdfDoc.numPages) {
       return;
     }
+    document.querySelectorAll(".flip").forEach((flip) => {
+      flip.classList.add("alt");
+    });
     pageNum = Math.min(
       pdfDoc.numPages,
       pageNum + (window.innerWidth > 1023 ? 2 : 1)

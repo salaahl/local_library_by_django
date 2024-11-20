@@ -2,9 +2,9 @@
 
 {% block title %}{{ book_instance.book.title }}{% endblock %} 
 
-{% block css %}
+{% block css %} 
 {% load static %}
-<link rel="stylesheet" href="{% static 'css/book_instance_read.css' %}">
+<link rel="stylesheet" href="{% static 'css/book_instance_read.css' %}" />
 {% endblock %} 
 
 {% block content %}
@@ -22,11 +22,44 @@
         <article id="canvas-container">
           <button id="prev">❮</button>
           <button id="next">❯</button>
+          <div class="flips">
+            <div class="flip flip1">
+              <div class="flip flip2">
+                <div class="flip flip3">
+                  <div class="flip flip4">
+                    <div class="flip flip5">
+                      <div class="flip flip6">
+                        <div class="flip flip7">
+                          <div class="flip flip8">
+                            <div class="flip flip9">
+                              <div class="flip flip10"></div>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
           <canvas id="canvas1"></canvas>
           <canvas id="canvas2"></canvas>
-          <input type="hidden" id="pdf-url" value="{{ book_instance.pdf_file.url }}" />
-          <input type="hidden" id="bookmark" value="{{ book_instance.bookmark }}" />
-          <input type="hidden" id="bookmark-url" value="{% url 'book_instance-bookmark' book_instance.id %}" />
+          <input
+            type="hidden"
+            id="pdf-url"
+            value="{{ book_instance.pdf_file.url }}"
+          />
+          <input
+            type="hidden"
+            id="bookmark"
+            value="{{ book_instance.bookmark }}"
+          />
+          <input
+            type="hidden"
+            id="bookmark-url"
+            value="{% url 'book_instance-bookmark' book_instance.id %}"
+          />
         </article>
         <footer></footer>
       </section>
@@ -35,7 +68,7 @@
 </main>
 {% endblock %} 
 
-{% block js %}
+{% block js %} 
 {% load static %}
 <script type="module" src="{% static 'js/book_instance_read.js' %}"></script>
 {% endblock %}
