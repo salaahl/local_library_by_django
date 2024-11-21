@@ -12,28 +12,26 @@
   <div id="pages">
     <input id="page_num" /> sur <span id="page_count"></span>
   </div>
-  <div id="wrapper">
-    <div id="container">
-      <section class="open-book">
-        <header>
-          <h1>{{ book_instance.book.title }}</h1>
-          <h6>{{ book_instance.book.author }}</h6>
-        </header>
-        <article id="canvas-container">
-          <button id="prev">❮</button>
-          <button id="next">❯</button>
-          <div class="flips">
-            <div class="flip flip1">
-              <div class="flip flip2">
-                <div class="flip flip3">
-                  <div class="flip flip4">
-                    <div class="flip flip5">
-                      <div class="flip flip6">
-                        <div class="flip flip7">
-                          <div class="flip flip8">
-                            <div class="flip flip9">
-                              <div class="flip flip10"></div>
-                            </div>
+  <div id="book-container">
+    <section class="open-book">
+      <header>
+        <h1>{{ book_instance.book.title }}</h1>
+        <h6>{{ book_instance.book.author }}</h6>
+      </header>
+      <article id="canvas-container">
+        <button id="prev">❮</button>
+        <button id="next">❯</button>
+        <div class="flips">
+          <div class="flip flip1">
+            <div class="flip flip2">
+              <div class="flip flip3">
+                <div class="flip flip4">
+                  <div class="flip flip5">
+                    <div class="flip flip6">
+                      <div class="flip flip7">
+                        <div class="flip flip8">
+                          <div class="flip flip9">
+                            <div class="flip flip10"></div>
                           </div>
                         </div>
                       </div>
@@ -43,27 +41,27 @@
               </div>
             </div>
           </div>
-          <canvas id="canvas1"></canvas>
-          <canvas id="canvas2"></canvas>
-          <input
-            type="hidden"
-            id="pdf-url"
-            value="{{ book_instance.pdf_file.url }}"
-          />
-          <input
-            type="hidden"
-            id="bookmark"
-            value="{{ book_instance.bookmark }}"
-          />
-          <input
-            type="hidden"
-            id="bookmark-url"
-            value="{% url 'book_instance-bookmark' book_instance.id %}"
-          />
-        </article>
-        <footer></footer>
-      </section>
-    </div>
+        </div>
+        <canvas id="canvas1"></canvas>
+        <canvas id="canvas2"></canvas>
+        <input
+          type="hidden"
+          id="pdf-url"
+          value="{{ book_instance.pdf_file.url }}"
+        />
+        <input
+          type="hidden"
+          id="bookmark"
+          value="{{ book_instance.bookmark }}"
+        />
+        <input
+          type="hidden"
+          id="bookmark-url"
+          value="{% url 'book_instance-bookmark' book_instance.id %}"
+        />
+      </article>
+      <footer></footer>
+    </section>
   </div>
 </main>
 {% endblock %} 

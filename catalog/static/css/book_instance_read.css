@@ -8,7 +8,7 @@ button {
 }
 
 #pages {
-  margin: calc(2vh - 1%) auto calc(2vh + 1em + 1%) auto;
+  margin: 10% auto;
   text-align: center;
 }
 
@@ -20,18 +20,12 @@ button {
   border-radius: 15px;
 }
 
-#canvas-container {
-  position: relative;
-  background-color: white;
-}
-
-#wrapper {
+#book-container {
   margin-left: auto;
   margin-right: auto;
 }
 
 .open-book {
-  margin: 2em auto 4em auto;
   padding: 2em 0;
   color: #000;
   background: white;
@@ -58,6 +52,11 @@ button {
 .open-book header * {
   font-size: 0.75em;
   text-transform: uppercase;
+}
+
+#canvas-container {
+  position: relative;
+  background-color: white;
 }
 
 #canvas1,
@@ -107,6 +106,10 @@ button {
 }
 
 @media (min-width: 1024px) {
+  #pages {
+    margin: calc(2vh - 2%) auto calc(2vh + 2em) auto;
+  }
+
   #canvas-container {
     display: flex;
     justify-content: space-between;
@@ -132,6 +135,12 @@ button {
     margin: 1em;
     filter: brightness(0.98); /* Améliorer le confort de lecture */
     z-index: 0;
+  }
+
+  @media (prefers-color-scheme: dark) {
+    .open-book {
+      filter: contrast(0.85);
+    }
   }
 
   .open-book:before {
@@ -293,10 +302,8 @@ button {
 
   /* Flips Animation */
   .flip.flip1 {
-    right: 50%;
     animation: flip1 1s infinite ease-in-out;
-    border-width: 2px 2px 2px 0;
-    margin-top: calc(-4em + 10px);
+    margin: calc(-4em + 10px) 0 0 0;
     height: calc(200% + 4em);
     right: 100%;
     width: 10%;
@@ -404,6 +411,7 @@ button {
     transform: rotateY(0deg);
   }
 }
+
 @keyframes nextFlip3 {
   0% {
     transform: rotateY(0deg);
@@ -415,6 +423,7 @@ button {
     transform: rotateY(0deg);
   }
 }
+
 @keyframes nextFlip4 {
   0% {
     transform: rotateY(0deg);
@@ -426,6 +435,7 @@ button {
     transform: rotateY(0deg);
   }
 }
+
 @keyframes nextFlip5 {
   0% {
     transform: rotateY(0deg);
@@ -437,6 +447,7 @@ button {
     transform: rotateY(0deg);
   }
 }
+
 @keyframes nextFlip6 {
   0% {
     transform: rotateY(0deg);
@@ -448,6 +459,7 @@ button {
     transform: rotateY(0deg);
   }
 }
+
 @keyframes nextFlip7 {
   0% {
     transform: rotateY(0deg);
@@ -459,6 +471,7 @@ button {
     transform: rotateY(0deg);
   }
 }
+
 @keyframes nextFlip8 {
   0% {
     transform: rotateY(0deg);
@@ -470,6 +483,7 @@ button {
     transform: rotateY(0deg);
   }
 }
+
 @keyframes nextFlip9 {
   0% {
     transform: rotateY(0deg);
@@ -481,6 +495,7 @@ button {
     transform: rotateY(0deg);
   }
 }
+
 @keyframes nextFlip10 {
   0% {
     transform: rotateY(0deg);
