@@ -48,9 +48,8 @@
                   </li>
                   {% endif %}
                 </ul>
-                <div id="user-div">
+                <div id="login-container">
                   {% if user.is_authenticated %}
-                  <p>Utilisateur : {{ user.get_username }}</p>
                   <a class="nav-link button" href="{% url 'logout' %}">Déconnexion</a>
                   {% else %}
                   <!-- Le next s'ajoute à l'URL comme un paramètre. Il récupère le chemin depuis lequel l'utilisateur a cliqué et le renvoie dessus après coup -->

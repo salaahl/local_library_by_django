@@ -53,10 +53,6 @@
     --navbar-border-color: whitesmoke;
     --table-border-color: rgba(0, 0, 0, 0.1);
   }
-
-  #user-div > p {
-    color: rgba(0, 0, 0, 0.5);
-  }
 }
 
 /* Styles généraux */
@@ -215,7 +211,7 @@ div:has(> .table) {
   fill: #06f;
 }
 
-#user-div .button {
+#login-container .button {
   width: 100%;
   margin-top: 1rem;
   color: white;
@@ -263,11 +259,8 @@ div:has(> .table) {
   }
 
   #navbar-brand {
+    width: 100%;
     margin-bottom: 1.5rem;
-  }
-
-  #user-div {
-    text-align: center;
   }
 
   #page-container > main {
@@ -278,7 +271,7 @@ div:has(> .table) {
     min-width: 150px;
   }
 
-  #user-div .button {
+  #login-div .button {
     width: auto;
     margin-top: 0;
   }
