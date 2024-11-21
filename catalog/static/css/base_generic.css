@@ -1,13 +1,14 @@
+/* Thèmes clairs et sombres */
 @media (prefers-color-scheme: dark) {
   :root {
     --h1-color: darkseagreen;
     --font-color: white;
     --navbar-bg-color: rgb(52, 58, 64);
-    --page-bg-color: rgb(52, 58, 64, 0.8);
+    --page-bg-color: rgba(52, 58, 64, 0.8);
     --card-bg: rgb(71, 129, 127);
     --card-border-color: rgb(81, 139, 137);
-    --navbar-border-color: rgb(0, 0, 0, 0.1);
-    --table-border-color: rgb(0, 0, 0, 0.3);
+    --navbar-border-color: rgba(0, 0, 0, 0.1);
+    --table-border-color: rgba(0, 0, 0, 0.3);
   }
 
   .navbar-toggler-icon {
@@ -15,11 +16,12 @@
   }
 
   .nav-link {
-    color: rgb(255, 255, 255, 0.5);
+    color: rgba(255, 255, 255, 0.5);
   }
 
-  .nav-link.active, .nav-link:hover {
-    color: rgb(255, 255, 255, 1) !important;
+  .nav-link.active,
+  .nav-link:hover {
+    color: rgba(255, 255, 255, 1) !important;
   }
 
   .table tbody {
@@ -35,7 +37,7 @@
     background-color: transparent;
   }
 
-  #page-container.button {
+  #page-container .button {
     filter: invert(1);
   }
 }
@@ -49,117 +51,15 @@
     --card-bg: rgb(198, 198, 198);
     --card-border-color: rgb(208, 208, 208);
     --navbar-border-color: whitesmoke;
-    --table-border-color: rgb(0, 0, 0, 0.1);
+    --table-border-color: rgba(0, 0, 0, 0.1);
   }
 
   #user-div > p {
-    color: rgb(0, 0, 0, 0.5);
+    color: rgba(0, 0, 0, 0.5);
   }
 }
 
-h1 {
-  font-size: xx-large;
-}
-
-#page-container > main {
-  max-width: 991px;
-  margin-top: 10%;
-  margin-left: auto;
-  margin-right: auto;
-}
-
-.navbar {
-  width: 100%;
-  padding-top: 20px;
-  padding-bottom: 20px;
-}
-
-.navbar-collapse {
-  margin-top: 20px;
-}
-
-.helptext {
-  font-size: smaller;
-}
-
-@media (max-width: 991px) {
-  #navbar-container {
-    min-height: 80px;
-  }
-
-  #navbar-container,
-  #page-container {
-    width: 100%;
-  }
-}
-
-@media (min-width: 992px) {
-  h1 {
-    font-size: xxx-large;
-  }
-
-  body .container-fluid,
-  body .container-fluid > .row {
-    height: 100%;
-  }
-
-  #page-container {
-    padding: 2.5% 5% 0 5%;
-  }
-
-  .navbar {
-    position: fixed;
-    height: -webkit-fill-available;
-    width: fit-content;
-    padding: 2% 1%;
-  }
-
-  .navbar-expand-lg .navbar-collapse {
-    justify-content: space-between;
-  }
-
-  #navbar-brand {
-    width: 100%;
-    margin-bottom: 1.5rem;
-  }
-
-  #navbar-brand > span {
-    color: lightcoral;
-  }
-
-  #user-div {
-    text-align: center;
-  }
-
-  #page-container > main {
-    margin-top: 0;
-  }
-
-  .button {
-    min-width: 150px;
-  }
-}
-
-@media (min-width: 991px) and (max-width: 1024px) {
-  #navbar-container {
-    width: 25%;
-  }
-
-  #page-container {
-    width: 75%;
-  }
-}
-
-@media (min-width: 1025px) {
-  #navbar-container {
-    width: 20%;
-  }
-
-  #page-container {
-    width: 80%;
-  }
-}
-
+/* Styles généraux */
 html,
 body {
   height: 100%;
@@ -183,6 +83,11 @@ h1 {
   margin-bottom: 2rem;
   text-transform: uppercase;
   color: var(--h1-color);
+  font-size: xx-large;
+}
+
+h1 {
+  font-size: xxx-large;
 }
 
 a {
@@ -192,7 +97,6 @@ a {
 .table {
   margin-bottom: 0;
   text-align: center;
-  text-align-last: center;
 }
 
 .table tr {
@@ -203,17 +107,48 @@ a {
   border-bottom-width: 0;
 }
 
-div:has(> .table),
+.table .col-optional {
+  display: none;
+}
+
+@media (min-width: 768px) {
+  .table .col-optional {
+    display: table-cell;
+  }
+}
+
 div:has(> .table) {
   width: 100%;
   overflow: auto;
-  border: 2px solid;
+  border: 2px solid var(--table-border-color);
   border-radius: 10px;
-  border-color: var(--table-border-color);
 }
 
 .form-control:focus {
   box-shadow: none;
+}
+
+.navbar {
+  width: 100%;
+  padding: 20px 0;
+}
+
+.navbar-collapse {
+  margin-top: 20px;
+}
+
+.navbar-toggler {
+  border: 0;
+}
+
+.navbar-toggler:focus {
+  box-shadow: none;
+}
+
+.navbar ul > .nav-item > .nav-link,
+.navbar .btn-toggle {
+  padding-left: 0 !important;
+  padding-top: 1rem;
 }
 
 #navbar-container {
@@ -223,28 +158,20 @@ div:has(> .table) {
 
 #navbar-brand {
   font-size: 130%;
-  text-decoration: unset;
+  text-decoration: none;
 }
 
-.navbar-toggler:focus {
-  box-shadow: none;
-}
-
-.navbar ul > .nav-item > .nav-link {
-  padding-left: 0 !important;
-  padding-top: 1rem;
-}
-
-.navbar .btn-toggle {
-  padding-left: 0 !important;
-}
-
-.navbar-toggler {
-  border: 0;
+#navbar-brand > span {
+  color: lightseagreen;
 }
 
 #page-container {
   overflow-x: hidden;
+}
+
+#page-container > main {
+  max-width: 991px;
+  margin: 10% auto 0 auto;
 }
 
 .button {
@@ -270,8 +197,6 @@ div:has(> .table) {
   text-decoration: none;
   transition: all 0.3s;
   user-select: none;
-  -webkit-user-select: none;
-  touch-action: manipulation;
 }
 
 .button:focus {
@@ -297,28 +222,84 @@ div:has(> .table) {
   background-color: indianred;
 }
 
-aside.nav-pagination {
-  position: absolute;
-  bottom: 0;
-}
-
-table .col-optional {
-  display: none;
-}
-
 .alert {
   background-color: indianred;
 }
 
-@media (min-screen: 768px) {
-  table .col-optional {
-    display: table-cell;
+.helptext {
+  font-size: smaller;
+}
+
+@media (max-width: 991px) {
+  #navbar-container {
+    min-height: 80px;
+  }
+
+  #navbar-container,
+  #page-container {
+    width: 100%;
   }
 }
 
 @media (min-width: 992px) {
+  body .container-fluid,
+  body .container-fluid > .row {
+    height: 100%;
+  }
+
+  #page-container {
+    padding: 2.5% 5% 0 5%;
+  }
+
+  .navbar {
+    position: fixed;
+    height: -webkit-fill-available;
+    width: fit-content;
+    padding: 2% 1%;
+  }
+
+  .navbar-expand-lg .navbar-collapse {
+    justify-content: space-between;
+  }
+
+  #navbar-brand {
+    margin-bottom: 1.5rem;
+  }
+
+  #user-div {
+    text-align: center;
+  }
+
+  #page-container > main {
+    margin-top: 0;
+  }
+
+  .button {
+    min-width: 150px;
+  }
+
   #user-div .button {
     width: auto;
     margin-top: 0;
+  }
+}
+
+@media (min-width: 991px) and (max-width: 1023px) {
+  #navbar-container {
+    width: 25%;
+  }
+
+  #page-container {
+    width: 75%;
+  }
+}
+
+@media (min-width: 1024px) {
+  #navbar-container {
+    width: 20%;
+  }
+
+  #page-container {
+    width: 80%;
   }
 }

@@ -3,11 +3,11 @@
 {% block content %}
 <main>
   <h1>Retourner un document</h1>
-  <p>Vouslez-vous vraiment retourner le document suivant : {{ book_instance }} ?</p>
+  <p>Voulez-vous vraiment retourner le document suivant : {{ book_instance.book.name }} ?</p>
 
   <form action="" method="POST">
     {% csrf_token %}
-    <input type="submit" value="Yes, delete.">
+    <input type="submit" value="Oui, retourner">
   </form>
 </main>
 {% endblock %}
