@@ -58,6 +58,7 @@ def index(request):
         return JsonResponse({'books': books})
 
     num_books = Book.objects.all().count()
+    latest_books = BookInstance.objects.order_by('-id')[:5]
     num_instances = BookInstance.objects.all().count()
 
     # Available books (status = 'a')
@@ -73,6 +74,7 @@ def index(request):
 
     context = {
         'num_books': num_books,
+        'latest_books': latest_books,
         'num_instances': num_instances,
         'num_instances_available': num_instances_available,
         'num_authors': num_authors,
@@ -180,7 +182,7 @@ class AuthorListView(generic.ListView):
     context_object_name = 'authors_list'  # your own name for the list as a template variable
     # queryset = Book.objects.filter(title__icontains='one')[:5] # Get and return 5 books containing the title one
     # Le signe "-" indique à Django de sortir les résultats par ordre descendant
-    queryset = Author.objects.all().order_by('-id')
+    queryset = Author.objects.all().order_by('last_name')
     # Gère la logique de la pagination. L'affichage est quant à lui géré par le template associé (en l'occurence, le template "base_generic").
     paginate_by = 10
     template_name = 'authors/authors_list.html'
@@ -189,7 +191,7 @@ class AuthorListView(generic.ListView):
 class BookListView(generic.ListView):
     model = Book
     context_object_name = 'books_list'
-    queryset = Book.objects.all()
+    queryset = Book.objects.all().order_by('-id')
     paginate_by = 10
     template_name = 'books/books_list.html'
 

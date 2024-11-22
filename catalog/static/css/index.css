@@ -35,9 +35,8 @@ h1 + p {
   padding: 1%;
 }
 
-#counter {
-  position: absolute;
-  bottom: 0;
+#new {
+  margin-top: 6rem;
 }
 
 @media (min-width: 992px) {

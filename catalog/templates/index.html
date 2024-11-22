@@ -19,10 +19,20 @@
   <h2>La bibliothèque dispose des enregistrements suivants :</h2>
   <ul>
     <li><strong>Livres:</strong> {{ num_books }}</li>
-    <li><strong>Exemplaires :</strong> {{ num_instances }}</li>
-    <li><strong>Exemplaires disponibles:</strong> {{ num_instances_available }}</li>
-    <li><strong>Auteurs:</strong> {{ num_authors }}</li>
+    <li><strong>Nombre d'exemplaires :</strong> {{ num_instances }}</li>
+    <li><strong>Exemplaires disponibles :</strong> {{ num_instances_available }}</li>
+    <li><strong>Auteurs :</strong> {{ num_authors }}</li>
   </ul>
+  <div id="new">
+    <h2>Les derniers livres ajoutés :</h2>
+    <ul>
+      {% for bookinstance in latest_books %}
+        <li>
+          <a href="{% url 'book-detail' bookinstance.book.id %}">{{ bookinstance.book.title }}</a> ({{ bookinstance.book.author }})
+        </li>
+      {% endfor %}
+    </ul>
+  </div>
 </main>
 {% endblock %}
 
