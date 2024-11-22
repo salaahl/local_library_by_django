@@ -136,7 +136,7 @@ button {
 
   .open-book {
     position: relative;
-    max-width: 1000px;
+    max-width: 115vh;
     margin: 1em auto;
     filter: brightness(0.98); /* Améliorer le confort de lecture */
     box-shadow: rgba(0, 0, 0, 0.5) 0 1em 3em;
