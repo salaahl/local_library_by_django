@@ -1,0 +1,43 @@
+services:
+  web:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    container_name: ${APP_NAME}_web
+    restart: unless-stopped
+    command: /entrypoint.sh
+    volumes:
+      - .:/app
+    ports:
+      - "80:8000"
+    depends_on:
+      - db
+    environment:
+      - DEBUG=0
+      - DJANGO_SECRET_KEY=${APP_SECRET}
+      - DJANGO_ALLOWED_HOSTS=${APP_URL}
+      - DATABASE_URL=postgresql://${DB_USERNAME}:${DB_PASSWORD}@db:${DB_PORT}/${DB_DATABASE}
+    networks:
+      - django
+
+  db:
+    image: postgres:15-alpine
+    container_name: db
+    restart: unless-stopped
+    volumes:
+      - dbdata:/var/lib/postgresql/data
+    environment:
+      POSTGRES_DB: ${DB_DATABASE}
+      POSTGRES_USER: ${DB_USERNAME}
+      POSTGRES_PASSWORD: ${DB_PASSWORD}
+    ports:
+      - "5432:5432"
+    networks:
+      - django
+
+networks:
+  django:
+    driver: bridge
+
+volumes:
+  dbdata:
