@@ -13,8 +13,8 @@ services:
     depends_on:
       - db
     environment:
-      - DEBUG=0
-      - DJANGO_SECRET_KEY=${APP_SECRET}
+      - DEBUG=${DEBUG}
+      - SECRET_KEY=${SECRET_KEY}
       - DJANGO_ALLOWED_HOSTS=${APP_URL}
       - DATABASE_URL=postgresql://${DB_USERNAME}:${DB_PASSWORD}@db:${DB_PORT}/${DB_DATABASE}
     networks:
@@ -22,7 +22,7 @@ services:
 
   db:
     image: postgres:15-alpine
-    container_name: db
+    container_name: ${APP_NAME}_db
     restart: unless-stopped
     volumes:
       - dbdata:/var/lib/postgresql/data

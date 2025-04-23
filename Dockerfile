@@ -7,7 +7,8 @@ ENV PYTHONUNBUFFERED 1
 
 # Installation des dépendances
 RUN apt-get update \
-    && apt-get install -y netcat \
+    && apt-get install -y build-essential \
+    && apt-get install -y netcat-traditional \
     && apt-get clean
 
 # Créer et définir le répertoire de travail
