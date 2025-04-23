@@ -39,6 +39,7 @@ pycparser==2.21
 pyflakes==2.1.1
 pylev==1.4.0
 pyparsing==3.0.5
+python-dotenv==1.1.0
 python-jsonrpc-server==0.3.2
 python-language-server==0.31.10
 requests==2.26.0
