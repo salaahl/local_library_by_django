@@ -33,6 +33,7 @@ if SECRET_KEY is None:
     )
     exit(1)
 
+APP_NAME = os.getenv('APP_NAME')
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = os.getenv('DEBUG')
 
@@ -76,6 +77,7 @@ TEMPLATES = [
                 'django.template.context_processors.request',
                 'django.contrib.auth.context_processors.auth',
                 'django.contrib.messages.context_processors.messages',
+                'catalog.context_processors.custom_settings',
             ],
         },
     },
