@@ -90,11 +90,11 @@ if os.getenv('DEBUG') == False :
     DATABASES = {
         'default': {
             'ENGINE': 'django.db.backends.postgresql',
-            'DATABASE': os.getenv('DATABASE'),
-            'USER': os.getenv('USER'),
-            'PASSWORD': os.getenv('PASSWORD'),
-            'HOST': os.getenv('HOST'),
-            'PORT': os.getenv('PORT'),
+            'DATABASE': os.getenv('DB_DATABASE'),
+            'USER': os.getenv('DB_USER'),
+            'PASSWORD': os.getenv('DB_PASSWORD'),
+            'HOST': os.getenv('DB_HOST'),
+            'PORT': os.getenv('DB_PORT'),
         }
     }
 else:
