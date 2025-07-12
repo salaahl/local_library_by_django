@@ -17,6 +17,11 @@ h3 {
   filter: drop-shadow(5px 5px 0px rgba(0, 0, 0, 0.1));
 }
 
+.book-copies {
+  width: 100%;
+  margin-top: 25px;
+}
+
 .book-status {
   width: fit-content;
   margin: auto;
