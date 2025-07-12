@@ -1,15 +1,4 @@
-@media (max-width: 991px) {
-
-}
-
-@media (min-width: 992px) {
-  
-}
-
 .search-filter {
-  width: 100%;
-  padding: 0;
-  text-align: start;
   font-weight: inherit;
   border: 0px;
   background: transparent;
@@ -17,10 +6,8 @@
 
 .search-filter:after {
   font-family: "Font Awesome 5 Free";
-  content: "\f0dc";
+  content: "\f882";
   display: inline-block;
-  padding-right: 3px;
-  vertical-align: middle;
   font-weight: 900;
-  margin-left: 2%;
+  margin-left: 5px;
 }

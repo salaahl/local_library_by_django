@@ -11,12 +11,12 @@ document
         return document.querySelector(id);
     };
 
-    let body = document.querySelectorAll("#page-container > #search-container ~ *");
-
+    let body = document.querySelectorAll("#search-container ~ *");
+        
     timer = setTimeout(function() {
-        if ($('[name=search]').value.length > 1) {
+        if ($('[name=search]').value.length > 0) {
             body.forEach(content => {
-                content.style.filter = 'blur(5px) opacity(0)'
+                content.style.filter = 'blur(5px) opacity(0)';
             })
 
             $('#search-results').innerHTML = '';
@@ -41,21 +41,20 @@ document
                     if (result.books != '') {
                         $('#search-results').innerHTML =
                             `<table class="table table-striped">
-                            <thead>
-                              <tr class="table-row">
-                                <th scope="col">Titre</th>
-                                <th scope="col">Auteur</th>
-                              </tr>
-                            </thead>
-                            <tbody class="table-body">
-                            </tbody>
-                          </table>`
+                                <thead>
+                                    <tr class="table-row">
+                                        <th scope="col">Titre</th>
+                                        <th scope="col">Auteur</th>
+                                    </tr>
+                                </thead>
+                                <tbody class="table-body"></tbody>
+                            </table>`
 
                         result.books.forEach(book => {
                             $('tbody').innerHTML +=
                                 '<tr class="table-row">' +
-                                '<td><a href="/catalog/book/' + book['id'] + '">' + book['title'] +                                   '</a></td>' +
-                                '<td><a href="/catalog/author/' + book['author_id'] + '">' +                                           book['author'] + 
+                                '<td><a href="/catalog/book/' + book['id'] + '">' + book['title'] + '</a></td>' +
+                                '<td><a href="/catalog/author/' + book['author_id'] + '">' + book['author'] + 
                               '</a></td>' + '</tr>';
                         })
                     } else {
@@ -70,7 +69,7 @@ document
                 });
         } else {
             body.forEach(content => {
-                content.style.filter = 'blur(0px) opacity(1)'
+                content.style.filter = 'blur(0px) opacity(1)';
             })
             $('#search-results').innerHTML = '';
         }

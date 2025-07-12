@@ -24,7 +24,6 @@ document.querySelectorAll('.search-filter').forEach(filter => {
     fetch(request)
       .then(response => response.json())
       .then(result => {
-        console.log(result)
         $('tbody').style.opacity = '1';
         result.books.forEach(book => {
             $('tbody').innerHTML +=
