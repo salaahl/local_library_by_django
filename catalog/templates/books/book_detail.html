@@ -52,12 +52,14 @@
                   <input type="hidden" name="copy_id" value="{{ copy.id }}" />
                   <input type="hidden" name="user_id" value="{{ user.id }}" />
                 </form>
-              {% elif copy.status == 'o' and user == copy.borrower %}
-              <a class="button" href="{% url 'book-renew' copy.pk %}?next={% url 'book-detail' book.id %}">Prolonger</a>
-              <a class="button" href="{% url 'book-return' copy.pk %}?next={% url 'book-detail' book.id %}">Retourner</a>
-              {% else %}
-                <strong>Document emprunté par :</strong> {{ copy.borrower }}<br>
-                <strong>Date de retour :</strong> {{ copy.due_back|date:"d/m/Y" }}
+              {% elif copy.status == 'o' %}
+                {% if user == copy.borrower %}
+                  <a class="button" href="{% url 'book-renew' copy.pk %}?next={% url 'book-detail' book.id %}">Prolonger</a>
+                  <a class="button" href="{% url 'book-return' copy.pk %}?next={% url 'book-detail' book.id %}">Retourner</a>
+                {% else %}
+                  <strong>Document emprunté par :</strong> {{ copy.borrower }}<br>
+                  <strong>Date de retour :</strong> {{ copy.due_back|date:"d/m/Y" }}
+                {% endif %}
               {% endif %}
           </td>
         </tr>
