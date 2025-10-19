@@ -47,41 +47,38 @@ window.addEventListener("DOMContentLoaded", (event) => {
       flip.classList.add("start-animation");
     });
 
-    setTimeout(
-      () => {
-        // Render the left page
-        var renderLeft = renderPage(startPage, canvas1, ctx1);
+    setTimeout(() => {
+      // Render the left page
+      var renderLeft = renderPage(startPage, canvas1, ctx1);
 
-        // Render the right page if the screen is wide enough
-        var renderRight = Promise.resolve();
-        if (startPage + 1 <= pdfDoc.numPages && window.innerWidth > 1023) {
-          renderRight = renderPage(startPage + 1, canvas2, ctx2);
-        } else {
-          // Clear the second canvas if there is no second page or if the screen is small
-          ctx2.clearRect(0, 0, canvas2.width, canvas2.height);
+      // Render the right page if the screen is wide enough
+      var renderRight = Promise.resolve();
+      if (startPage + 1 <= pdfDoc.numPages && window.innerWidth > 1023) {
+        renderRight = renderPage(startPage + 1, canvas2, ctx2);
+      } else {
+        // Clear the second canvas if there is no second page or if the screen is small
+        ctx2.clearRect(0, 0, canvas2.width, canvas2.height);
+      }
+
+      // Wait for both renderings to complete
+      Promise.all([renderLeft, renderRight]).then(function () {
+        pageRendering = false;
+        if (pageNumPending !== null) {
+          renderPages(pageNumPending);
+          pageNumPending = null;
         }
+      });
 
-        // Wait for both renderings to complete
-        Promise.all([renderLeft, renderRight]).then(function () {
-          pageRendering = false;
-          if (pageNumPending !== null) {
-            renderPages(pageNumPending);
-            pageNumPending = null;
-          }
-        });
+      document.querySelectorAll("#canvas1, #canvas2").forEach((canvas) => {
+        canvas.classList.remove("fade-out");
+      });
 
-        document.querySelectorAll("#canvas1, #canvas2").forEach((canvas) => {
-          canvas.classList.remove("fade-out");
-        });
-
-        document.querySelectorAll(".flip").forEach((flip) => {
-          flip.classList.remove("start-animation");
-        });
-        // Update the current page number input
-        document.getElementById("page_num").value = startPage;
-      },
-      window.innerWidth > 1023 ? 1000 : 500
-    );
+      document.querySelectorAll(".flip").forEach((flip) => {
+        flip.classList.remove("start-animation");
+      });
+      // Update the current page number input
+      document.getElementById("page_num").value = startPage;
+    }, 1000);
   }
 
   /**

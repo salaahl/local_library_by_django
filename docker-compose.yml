@@ -3,7 +3,16 @@ services:
     build:
       context: .
       dockerfile: Dockerfile
-    container_name: ${APP_NAME}_web
+    develop:
+      watch:
+        - action: sync
+          path: ./web
+          target: /src/web
+          ignore:
+            - node_modules/
+        - action: rebuild
+          path: package.json
+    container_name: local-library_app
     restart: unless-stopped
     command: /entrypoint.sh
     volumes:
@@ -12,17 +21,14 @@ services:
       - "80:8000"
     depends_on:
       - db
-    environment:
-      - DEBUG=${DEBUG}
-      - SECRET_KEY=${SECRET_KEY}
-      - DJANGO_ALLOWED_HOSTS=${APP_URL}
-      - DATABASE_URL=postgresql://${DB_USERNAME}:${DB_PASSWORD}@db:${DB_PORT}/${DB_DATABASE}
+    env_file:
+      - .env
     networks:
       - django
 
   db:
     image: postgres:15-alpine
-    container_name: ${APP_NAME}_db
+    container_name: local-library_db
     restart: unless-stopped
     volumes:
       - dbdata:/var/lib/postgresql/data
