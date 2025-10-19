@@ -51,7 +51,7 @@ button {
   display: flex;
   justify-content: space-between;
   flex-wrap: wrap;
-  padding: 0 22% 0 12%;
+  padding: 0 16% 0 6%;
   z-index: 2;
 }
 
@@ -75,9 +75,21 @@ button {
   background-color: white;
 }
 
+.canva-container {
+  width: var(--page-width);
+  padding: 10% 0;
+  overflow: hidden;
+}
+
+.canva-container:last-of-type {
+  display: none;
+}
+
 #canvas1,
 #canvas2 {
-  height: auto;
+  height: 100%;
+  width: 100%;
+  transform: scale(1.2);
   z-index: 1;
   transition: opacity 0.5s ease-in-out;
 }
@@ -87,22 +99,14 @@ button {
   opacity: 0;
 }
 
-#canvas1 {
-  width: var(--page-width);
-}
-
-#canvas2 {
-  display: none;
-}
-
 #prev,
 #next {
   cursor: pointer;
   position: absolute;
   left: 0;
-  height: 20%;
+  height: 10%;
   width: auto;
-  padding: 0 12px;
+  padding: 0 5px;
   color: #000;
   background-color: rgb(0 0 0 / 0.05);
   border-radius: 0 5px 5px 0;
@@ -113,10 +117,6 @@ button {
   -webkit-user-select: none;
   z-index: 2;
   transition: background-color 0.5s;
-}
-
-#next {
-  border-radius: 5px 0 0 5px;
 }
 
 #prev:hover,
@@ -173,9 +173,9 @@ button {
 .open-book footer:after {
   width: var(--page-width);
   background: white;
-  border-radius: 25%;
+  border-radius: 12.5%;
   content: "";
-  height: 2em;
+  height: 3em;
   position: absolute;
   z-index: -1;
 }
@@ -242,11 +242,11 @@ button {
 }
 
 #prev {
-  top: 28%;
+  top: 32.5%;
 }
 
 #next {
-  top: 52%;
+  top: 47.5%;
 }
 
 .flip.start-animation {
@@ -350,9 +350,17 @@ button {
     --page-position: 50%;
   }
 
+  .canva-container {
+    padding: unset;
+  }
+
+  .canva-container:last-of-type {
+    display: block;
+  }
+
   #canvas1,
   #canvas2 {
-    width: var(--page-width);
+    transform: unset;
   }
 
   #canvas2 {
@@ -363,19 +371,8 @@ button {
     max-width: 115vh;
   }
 
-  .open-book:after {
-    left: var(--page-position);
-  }
-
   .open-book header {
     padding: 0 7% 0 7%;
-  }
-
-  .open-book header:before,
-  .open-book header:after,
-  .open-book footer:before,
-  .open-book footer:after {
-    width: var(--page-width);
   }
 
   .open-book header:before,
@@ -383,19 +380,10 @@ button {
     right: var(--page-position);
   }
 
-  .open-book header:after,
-  .open-book footer:after {
-    left: var(--page-position);
-  }
-
-  .flips {
-    left: var(--page-position);
-    width: var(--page-width);
-  }
-
   #prev,
   #next {
     top: 40%;
+    height: 20%;
     padding: 16px;
   }
 
