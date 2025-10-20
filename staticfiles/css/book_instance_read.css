@@ -26,6 +26,7 @@ button {
 }
 
 #book-container {
+  margin-bottom: calc(2em + 2vh);
   transform: translateX(
     calc(var(--bs-gutter-x) * 0.75)
   ); /* Gère le margin à gauche en mode mobile */
